@@ -1,50 +1,62 @@
-// DetDev Terminal Shell Logic
+// DetDev Futuristic Website Logic
 
 document.addEventListener('DOMContentLoaded', () => {
-    initTerminalTabs();
+    initMobileNav();
+    initScrollSpy();
 });
 
-// Terminal Navigation Tabs
-function initTerminalTabs() {
-    const tabs = document.querySelectorAll('.term-tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+// Mobile Navigation Toggle
+function initMobileNav() {
+    const toggleBtn = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (toggleBtn && navLinks) {
+        toggleBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-open');
+        });
+    }
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks) navLinks.classList.remove('mobile-open');
         });
     });
+}
 
-    // Active Tab ScrollSpy
-    const sections = document.querySelectorAll('.term-section');
+// Active Nav Link ScrollSpy
+function initScrollSpy() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
     window.addEventListener('scroll', () => {
         let currentSection = '';
-        sections.forEach(sec => {
-            const secTop = sec.offsetTop - 150;
-            if (window.scrollY >= secTop) {
-                currentSection = sec.getAttribute('id');
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (window.scrollY >= sectionTop) {
+                currentSection = section.getAttribute('id');
             }
         });
 
-        tabs.forEach(tab => {
-            tab.classList.remove('active');
-            if (tab.getAttribute('href') === `#${currentSection}`) {
-                tab.classList.add('active');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
             }
         });
     });
 }
 
-// Copy Contact Function
+// Copy Contact to Clipboard
 function copyContact(textToCopy) {
     navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast(`COPIED: ${textToCopy}`);
+        showToast(`Copied: ${textToCopy}`);
     }).catch(err => {
         console.error('Failed to copy: ', err);
     });
 }
 
-// Terminal Toast Notification
+// Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
     const toastMsg = document.getElementById('toastMsg');
