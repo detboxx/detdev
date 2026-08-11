@@ -199,6 +199,36 @@
             </div>
         </section>
 
+        <!-- Mesh Monitor & Device Inspector Section -->
+        <section class="section-block" id="mesh-monitor">
+            <div class="glass-card">
+                <div class="card-top-bar">
+                    <span class="w-label"><i class="fa-solid fa-satellite-dish text-cyan"></i> EASYMESH_DEVICE_INSPECTOR.LOG</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="block-title"><i class="fa-solid fa-network-wired text-cyan"></i> Mesh Network & Connected Device Inspector</h2>
+                    <p class="block-text">3 Ways to check real-time connected devices and Wi-Fi 6 Mesh status across F6600, F6107A, and F670 nodes:</p>
+
+                    <div class="skills-columns-grid">
+                        <div class="skill-box">
+                            <h3><i class="fa-solid fa-sitemap text-cyan"></i> 1. Router Web GUI (Realtime Topology)</h3>
+                            <p class="block-text" style="margin-bottom: 10px; font-size: 0.82rem;">Access <code style="color: var(--neon-cyan);">http://192.168.1.1</code> ➔ Navigate to <strong>EasyMesh ➔ Topology</strong>. Click any Agent node to view connected MAC addresses, IP assignments, Link Speed (e.g. 1201 Mbps), and RSSI signal level.</p>
+                        </div>
+
+                        <div class="skill-box">
+                            <h3><i class="fa-solid fa-list-check text-emerald"></i> 2. Associated WLAN Client Table</h3>
+                            <p class="block-text" style="margin-bottom: 10px; font-size: 0.82rem;">Navigate to <strong>Local Network ➔ Status ➔ WLAN Client Status</strong>. Displays active 2.4GHz & 5GHz SSIDs (<code style="color: var(--neon-emerald);">NJ</code> / <code style="color: var(--neon-emerald);">NJ_5G</code>), client RSSI, and bandwidth utilization.</p>
+                        </div>
+
+                        <div class="skill-box">
+                            <h3><i class="fa-solid fa-terminal text-violet"></i> 3. Direct Firmware Log Extraction</h3>
+                            <p class="block-text" style="margin-bottom: 10px; font-size: 0.82rem;">Inspect raw <code style="color: var(--neon-violet);">61_log_file.log</code> / <code style="color: var(--neon-violet);">62_log_file.log</code> events for <code style="color: var(--neon-violet);">wlan5 sta on</code> notifications, MAC association handshakes, and 5GHz Star Topology backhaul health.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Projects Section -->
         <section class="section-block" id="projects">
             <h2 class="block-title"><i class="fa-solid fa-bolt text-rose"></i> Featured Projects & Mods</h2>
