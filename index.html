@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DetDev | Full-Stack Dev & Firmware Modder</title>
-    <meta name="description" content="DetDev - Developer, Network Specialist & Embedded Firmware Modder. Wi-Fi 6 EasyMesh, ZTE Config Decryption, Cloudflare & Full-Stack Solutions.">
+    <title>DetDev | Terminal CLI & Modder Shell</title>
+    <meta name="description" content="DetDev Terminal Interface - Developer, Network Specialist & Embedded Firmware Modder.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,301 +18,201 @@
 </head>
 <body>
 
-    <!-- Cyber Background Overlay & Glow Orbs -->
-    <div class="cyber-grid"></div>
-    <div class="ambient-glow glow-cyan"></div>
-    <div class="ambient-glow glow-violet"></div>
-    <div class="ambient-glow glow-emerald"></div>
-
-    <!-- Navigation Header -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="#" class="brand">
-                <div class="brand-logo-img-wrapper">
-                    <img src="detdev_logo.png" alt="DetDev Logo" class="brand-logo-img">
-                </div>
-                <div class="brand-name-group">
-                    <span class="brand-title">DetDev</span>
-                    <span class="brand-sub">DEV & MODDER</span>
-                </div>
-            </a>
-            
-            <nav class="nav-links" id="navLinks">
-                <a href="#about" class="nav-link active"><i class="fa-solid fa-terminal"></i> About</a>
-                <a href="#skills" class="nav-link"><i class="fa-solid fa-microchip"></i> Skills</a>
-                <a href="#projects" class="nav-link"><i class="fa-solid fa-code-branch"></i> Projects</a>
-                <a href="#contact" class="nav-link"><i class="fa-solid fa-paper-plane"></i> Contact</a>
-            </nav>
-
-            <div class="nav-actions">
-                <a href="https://github.com/detboxx" target="_blank" class="github-btn">
-                    <i class="fa-brands fa-github"></i> GitHub
-                </a>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </button>
+    <!-- Terminal Window Container -->
+    <div class="terminal-window">
+        
+        <!-- Terminal Header Bar -->
+        <header class="terminal-header">
+            <div class="terminal-controls">
+                <span class="control-btn close"></span>
+                <span class="control-btn minimize"></span>
+                <span class="control-btn maximize"></span>
             </div>
-        </div>
-    </header>
-
-    <!-- Main Content Layout -->
-    <main class="main-container">
-
-        <!-- Hero Section -->
-        <section class="hero-section" id="hero">
-            <div class="hero-status-pill">
-                <span class="pulse-emerald"></span>
-                <span class="status-text"><i class="fa-solid fa-bolt text-emerald"></i> SYSTEM READY // DETDEV READY FOR MODS & DEV</span>
+            <div class="terminal-title">
+                <img src="detdev_logo.png" alt="DetDev Logo" class="mini-logo">
+                <span>detdev@ws.in.th: ~ (zsh)</span>
             </div>
+            <div class="header-status">
+                <span class="status-dot"></span> ONLINE
+            </div>
+        </header>
 
-            <div class="hero-center-box">
-                <div class="hero-logo-display">
-                    <img src="detdev_logo.png" alt="DetDev Cyber Badge" class="hero-logo-img">
-                </div>
+        <!-- Navbar Menu as Terminal Command Tabs -->
+        <nav class="terminal-nav">
+            <a href="#hero" class="term-tab active"><i class="fa-solid fa-terminal"></i> system.sh</a>
+            <a href="#about" class="term-tab"><i class="fa-solid fa-file-code"></i> about.json</a>
+            <a href="#skills" class="term-tab"><i class="fa-solid fa-layer-group"></i> skills.conf</a>
+            <a href="#projects" class="term-tab"><i class="fa-solid fa-folder-tree"></i> projects/</a>
+            <a href="#contact" class="term-tab"><i class="fa-solid fa-envelope"></i> contact.sh</a>
+        </nav>
 
-                <div class="modder-badge">
-                    <i class="fa-solid fa-code"></i> FIRMWARE MODDER & FULL-STACK DEV
-                </div>
+        <!-- Terminal Body Output -->
+        <main class="terminal-body">
 
-                <h1 class="hero-name">Det<span class="neon-cyan">Dev</span><span class="cursor-blink">_</span></h1>
-                <h2 class="hero-tagline">Wi-Fi 6 EasyMesh Specialist • Reverse Engineering • Web Tech</h2>
+            <!-- Hero Section -->
+            <section class="term-section" id="hero">
+                <div class="cmd-prompt"><span class="user">detdev@ws.in.th</span>:<span class="path">~</span>$ <span class="cmd">./init_system.sh --verbose</span></div>
                 
-                <p class="hero-bio">
-                    Specializing in low-level router optimization, custom firmware patchers, AES-128 payload decryption, Cloudflare edge security, and futuristic web development.
-                </p>
-
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-neon">
-                        <i class="fa-solid fa-fire-flame-curved"></i> View Featured Mods & Code
-                    </a>
-                    <a href="mailto:detboxx@gmail.com" class="btn btn-outline">
-                        <i class="fa-solid fa-envelope"></i> detboxx@gmail.com
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Metrics Grid -->
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-icon cyan"><i class="fa-solid fa-wifi"></i></div>
-                    <div class="metric-info">
-                        <div class="metric-val">2.4 Gbps</div>
-                        <div class="metric-lbl">5GHz Wireless Backhaul</div>
-                    </div>
+                <div class="banner-box">
+                    <pre class="ascii-banner">
+ ____   _____ _____ ____  _____ _____ 
+|  _ \ | ____|_   _|  _ \| ____|v2026|
+| | | ||  _|   | | | | | |  _|  |  _| 
+| |_| || |___  | | | |_| | |___ | |   
+|____/ |_____| |_| |____/|_____||_|   
+                  [ DETDEV CLI v2.0 ]
+</pre>
                 </div>
 
-                <div class="metric-card">
-                    <div class="metric-icon violet"><i class="fa-solid fa-microchip"></i></div>
-                    <div class="metric-info">
-                        <div class="metric-val">ZTE ZXHN</div>
-                        <div class="metric-lbl">F6600, F6107A, F670 Fixes</div>
-                    </div>
+                <div class="term-output-block">
+                    <p class="hero-intro"><span class="highlight-cyan">[SYS_INFO]</span> Welcome to <strong>DetDev Terminal Shell</strong>. Full-Stack Developer & Firmware Modder.</p>
+                    <p class="hero-sub"><span class="highlight-emerald">[SPECIALTIES]</span> Wi-Fi 6 EasyMesh (AX3000) • ZTE Config Decryption • Cloudflare Edge Security</p>
                 </div>
 
-                <div class="metric-card">
-                    <div class="metric-icon emerald"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="metric-info">
-                        <div class="metric-val">Cloudflare</div>
-                        <div class="metric-lbl">Edge CDN & SSL Security</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="section-block" id="about">
-            <div class="cyber-card">
-                <div class="card-header-bar">
-                    <div class="window-dots">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                    </div>
-                    <span class="window-title">bash - detdev@modder-node:~</span>
+                <div class="term-quick-stats">
+                    <div class="stat-badge"><span class="lbl">5GHz BACKHAUL:</span> <span class="val">2.4 Gbps</span></div>
+                    <div class="stat-badge"><span class="lbl">TOPOLOGY:</span> <span class="val">100% Star</span></div>
+                    <div class="stat-badge"><span class="lbl">LATENCY WAIT:</span> <span class="val">0 Ticks</span></div>
+                    <div class="stat-badge"><span class="lbl">STATUS:</span> <span class="val emerald">Zero Queue Errors</span></div>
                 </div>
 
-                <div class="card-body">
-                    <h2 class="section-title"><i class="fa-solid fa-user-ninja text-cyan"></i> About DetDev</h2>
-                    <p class="section-desc">
-                        DetDev bridges the gap between low-level hardware networking and high-performance modern web technologies. From reverse-engineering proprietary router config binaries to configuring global CDN proxy pipelines and building futuristic web UIs, DetDev crafts robust, zero-latency solutions.
-                    </p>
-
-                    <div class="console-box">
-                        <div class="console-line"><span class="prompt">$</span> <span class="cmd">cat system_specs.json</span></div>
-                        <div class="console-output">
-{<br>
-&nbsp;&nbsp;<span class="json-key">"brand"</span>: <span class="json-str">"DetDev"</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-str">"Network Engineer & Full-Stack Modder"</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"focus"</span>: [<span class="json-str">"Wi-Fi 6 EasyMesh 1905.1"</span>, <span class="json-str">"ZTE Config Decryption"</span>, <span class="json-str">"Cloudflare Edge Security"</span>],<br>
-&nbsp;&nbsp;<span class="json-key">"email"</span>: <span class="json-str">"detboxx@gmail.com"</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"status"</span>: <span class="json-str">"100% Star Topology Active // Zero Queue Errors"</span><br>
-}
-                        </div>
-                    </div>
+                <div class="action-row">
+                    <a href="#projects" class="term-btn primary"><i class="fa-solid fa-folder-open"></i> View Projects</a>
+                    <a href="mailto:detboxx@gmail.com" class="term-btn secondary"><i class="fa-solid fa-envelope"></i> detboxx@gmail.com</a>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Skills Section -->
-        <section class="section-block" id="skills">
-            <div class="cyber-card">
-                <div class="card-header-bar">
-                    <span class="window-title"><i class="fa-solid fa-sliders"></i> SKILLS_MATRIX.DLL</span>
-                </div>
-
-                <div class="card-body">
-                    <h2 class="section-title"><i class="fa-solid fa-layer-group text-violet"></i> Technical Arsenal</h2>
-                    <p class="section-desc">Core competencies, tools, and protocols DetDev works with daily:</p>
-
-                    <div class="skills-grid">
-                        
-                        <div class="skill-column">
-                            <h3><i class="fa-solid fa-network-wired text-cyan"></i> Networking & Firmware</h3>
-                            <div class="tech-tags">
-                                <span class="tech-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi 6 (AX3000)</span>
-                                <span class="tech-tag"><i class="fa-solid fa-diagram-project"></i> EasyMesh 1905.1</span>
-                                <span class="tech-tag"><i class="fa-solid fa-server"></i> ZTE ZXHN Series</span>
-                                <span class="tech-tag"><i class="fa-solid fa-key"></i> AES-128-CBC Payload</span>
-                                <span class="tech-tag"><i class="fa-solid fa-terminal"></i> Telnet & Superuser</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-column">
-                            <h3><i class="fa-solid fa-cloud text-emerald"></i> Cloud & Security</h3>
-                            <div class="tech-tags">
-                                <span class="tech-tag"><i class="fa-solid fa-cloud"></i> Cloudflare CDN</span>
-                                <span class="tech-tag"><i class="fa-solid fa-shield-virus"></i> DDoS Protection</span>
-                                <span class="tech-tag"><i class="fa-solid fa-globe"></i> Custom Domain & SSL</span>
-                                <span class="tech-tag"><i class="fa-brands fa-github"></i> GitHub Pages</span>
-                                <span class="tech-tag"><i class="fa-solid fa-database"></i> Serverless DB</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-column">
-                            <h3><i class="fa-solid fa-code text-rose"></i> Software & Dev</h3>
-                            <div class="tech-tags">
-                                <span class="tech-tag"><i class="fa-brands fa-python"></i> Python 3</span>
-                                <span class="tech-tag"><i class="fa-brands fa-html5"></i> HTML5 & CSS3</span>
-                                <span class="tech-tag"><i class="fa-brands fa-js"></i> Modern ES6+ JS</span>
-                                <span class="tech-tag"><i class="fa-solid fa-cubes"></i> Glassmorphism UI</span>
-                                <span class="tech-tag"><i class="fa-brands fa-git-alt"></i> Git Version Control</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section class="section-block" id="projects">
-            <h2 class="section-title"><i class="fa-solid fa-fire text-rose"></i> Featured Projects & Mods</h2>
-            <p class="section-desc">Selected work, tools, and technical solutions by DetDev:</p>
-
-            <div class="projects-grid">
+            <!-- About Section -->
+            <section class="term-section" id="about">
+                <div class="cmd-prompt"><span class="user">detdev@ws.in.th</span>:<span class="path">~</span>$ <span class="cmd">cat about.json</span></div>
                 
-                <!-- Project 1 -->
-                <div class="cyber-project-card">
-                    <div class="project-top-bar">
-                        <div class="proj-badge cyan">FIRMWARE MOD</div>
-                        <a href="https://github.com/detboxx/zte-f6107a-mesh-fix" target="_blank" class="proj-link-icon" title="View Source">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                    <h3>ZTE ZXHN EasyMesh Patcher</h3>
-                    <p>Automated python configuration patcher for ZTE ZXHN Series (F6600, F6107A, F670). Fixes ACD queue floods, steering loops, and forces 100% 5GHz Star Topology.</p>
-                    <div class="project-tech-list">
-                        <span>Python 3</span>
-                        <span>EasyMesh</span>
-                        <span>Wi-Fi 6</span>
-                        <span>AES-128</span>
-                    </div>
+                <div class="json-code-viewer">
+                    <div class="json-line">{</div>
+                    <div class="json-line indent"><span class="key">"developer"</span>: <span class="str">"DetDev"</span>,</div>
+                    <div class="json-line indent"><span class="key">"role"</span>: <span class="str">"Embedded Firmware Modder & Full-Stack Developer"</span>,</div>
+                    <div class="json-line indent"><span class="key">"bio"</span>: <span class="str">"Specializing in reverse engineering router binaries, custom Python XML configuration patchers, AES-128 payload decryption, and high-performance web applications."</span>,</div>
+                    <div class="json-line indent"><span class="key">"email"</span>: <span class="str">"detboxx@gmail.com"</span>,</div>
+                    <div class="json-line indent"><span class="key">"hardware_supported"</span>: [<span class="str">"ZTE ZXHN F6600"</span>, <span class="str">"ZTE ZXHN F6107A"</span>, <span class="str">"ZTE ZXHN F670"</span>],</div>
+                    <div class="json-line indent"><span class="key">"mesh_protocol"</span>: <span class="str">"IEEE 1905.1 EasyMesh Star Topology"</span></div>
+                    <div class="json-line">}</div>
                 </div>
+            </section>
 
-                <!-- Project 2 -->
-                <div class="cyber-project-card">
-                    <div class="project-top-bar">
-                        <div class="proj-badge violet">REVERSE ENG</div>
-                        <a href="https://github.com/detboxx/zte-f6107a-mesh-fix" target="_blank" class="proj-link-icon" title="View Source">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
+            <!-- Skills Section -->
+            <section class="term-section" id="skills">
+                <div class="cmd-prompt"><span class="user">detdev@ws.in.th</span>:<span class="path">~</span>$ <span class="cmd">cat skills.conf</span></div>
+                
+                <div class="conf-grid">
+                    
+                    <div class="conf-box">
+                        <div class="conf-title"><i class="fa-solid fa-network-wired text-cyan"></i> [NETWORKING_FIRMWARE]</div>
+                        <ul class="conf-list">
+                            <li><span class="bullet">></span> Wi-Fi 6 (AX3000) Dual-Band</li>
+                            <li><span class="bullet">></span> IEEE 1905.1 EasyMesh</li>
+                            <li><span class="bullet">></span> ZTE ZXHN Series Patching</li>
+                            <li><span class="bullet">></span> AES-128-CBC Payload Decryption</li>
+                            <li><span class="bullet">></span> Telnet & LAN Superuser Unlock</li>
+                        </ul>
                     </div>
-                    <h3>ZTE Config Decryption Suite</h3>
-                    <p>Documentation & script pipeline for parsing 128-byte Magic Headers, unpacking Zlib payloads, and enabling LAN Telnet & Superuser access across major Thai ISPs.</p>
-                    <div class="project-tech-list">
-                        <span>Zlib</span>
-                        <span>Telnet</span>
-                        <span>Superuser</span>
-                        <span>Magic Header</span>
+
+                    <div class="conf-box">
+                        <div class="conf-title"><i class="fa-solid fa-cloud text-emerald"></i> [CLOUD_SECURITY]</div>
+                        <ul class="conf-list">
+                            <li><span class="bullet">></span> Cloudflare Global Edge CDN</li>
+                            <li><span class="bullet">></span> DDoS & Firewall Shield</li>
+                            <li><span class="bullet">></span> Custom Domain CNAME & SSL</li>
+                            <li><span class="bullet">></span> GitHub Pages Integration</li>
+                            <li><span class="bullet">></span> Serverless API & DB</li>
+                        </ul>
                     </div>
+
+                    <div class="conf-box">
+                        <div class="conf-title"><i class="fa-solid fa-code text-rose"></i> [SOFTWARE_DEV]</div>
+                        <ul class="conf-list">
+                            <li><span class="bullet">></span> Python 3 Automation Scripts</li>
+                            <li><span class="bullet">></span> HTML5 & CSS3 Terminal UI</li>
+                            <li><span class="bullet">></span> Modern JavaScript ES6+</li>
+                            <li><span class="bullet">></span> Git & GitHub Version Control</li>
+                            <li><span class="bullet">></span> Responsive Shell Layout</li>
+                        </ul>
+                    </div>
+
                 </div>
+            </section>
 
-                <!-- Project 3 -->
-                <div class="cyber-project-card">
-                    <div class="project-top-bar">
-                        <div class="proj-badge emerald">CLOUD DEV</div>
-                        <a href="https://www.ws.in.th" target="_blank" class="proj-link-icon" title="Live Site">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                    <h3>Cloudflare Edge CDN Pipeline</h3>
-                    <p>Custom domain pointing (ws.in.th) configured with Cloudflare Proxied CNAME records, Bangkok Edge Cache acceleration, and full HTTPS SSL security for GitHub Pages.</p>
-                    <div class="project-tech-list">
-                        <span>Cloudflare</span>
-                        <span>DNS</span>
-                        <span>HTTPS</span>
-                        <span>GitHub Pages</span>
-                    </div>
+            <!-- Projects Section -->
+            <section class="term-section" id="projects">
+                <div class="cmd-prompt"><span class="user">detdev@ws.in.th</span>:<span class="path">~</span>$ <span class="cmd">ls -la ./projects/</span></div>
+                
+                <div class="term-table-wrapper">
+                    <table class="term-table">
+                        <thead>
+                            <tr>
+                                <th>PERMISSIONS</th>
+                                <th>PROJECT NAME</th>
+                                <th>DESCRIPTION</th>
+                                <th>LINK</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="perm">drwxr-xr-x</code></td>
+                                <td><span class="proj-name cyan">zte-easymesh-fix</span></td>
+                                <td>Python 3 automated XML configuration patcher for ZTE ZXHN Series. Solves ACD queue floods & forces 5GHz Star Topology.</td>
+                                <td><a href="https://github.com/detboxx/zte-f6107a-mesh-fix" target="_blank" class="term-link"><i class="fa-brands fa-github"></i> repo</a></td>
+                            </tr>
+                            <tr>
+                                <td><code class="perm">drwxr-xr-x</code></td>
+                                <td><span class="proj-name violet">zte-config-decrypter</span></td>
+                                <td>Documentation & pipeline for parsing 128-byte Magic Headers, Zlib payloads, and unlocking Telnet & Superuser access.</td>
+                                <td><a href="https://github.com/detboxx/zte-f6107a-mesh-fix" target="_blank" class="term-link"><i class="fa-brands fa-github"></i> repo</a></td>
+                            </tr>
+                            <tr>
+                                <td><code class="perm">drwxr-xr-x</code></td>
+                                <td><span class="proj-name emerald">cloudflare-edge-cdn</span></td>
+                                <td>Custom domain pointing (ws.in.th) with Cloudflare Proxied CNAME records and SSL security.</td>
+                                <td><a href="https://www.ws.in.th" target="_blank" class="term-link"><i class="fa-solid fa-globe"></i> live</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </section>
 
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="section-block" id="contact">
-            <div class="cyber-card contact-card-glow">
-                <div class="card-body text-center">
-                    <h2 class="section-title justify-center"><i class="fa-solid fa-paper-plane text-cyan"></i> Connect with DetDev</h2>
-                    <p class="section-desc">Have a technical question or want to collaborate? Contact DetDev below:</p>
-
-                    <div class="contact-grid">
-                        
-                        <!-- Email Card -->
-                        <div class="contact-box" onclick="copyContact('detboxx@gmail.com')">
-                            <div class="contact-box-icon emerald"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="contact-box-content">
-                                <span class="box-lbl">DIRECT EMAIL</span>
-                                <span class="box-val">detboxx@gmail.com</span>
-                            </div>
-                            <button class="copy-action-btn" title="Copy Email"><i class="fa-regular fa-copy"></i></button>
+            <!-- Contact Section -->
+            <section class="term-section" id="contact">
+                <div class="cmd-prompt"><span class="user">detdev@ws.in.th</span>:<span class="path">~</span>$ <span class="cmd">./contact.sh</span></div>
+                
+                <div class="contact-shell-box">
+                    <p class="shell-text"><span class="highlight-cyan">[CONTACT_CHANNELS]</span> Click any item below to copy or open:</p>
+                    
+                    <div class="contact-terminal-grid">
+                        <div class="contact-term-card" onclick="copyContact('detboxx@gmail.com')">
+                            <span class="term-label">EMAIL:</span>
+                            <span class="term-val">detboxx@gmail.com</span>
+                            <i class="fa-regular fa-copy copy-icon"></i>
                         </div>
 
-                        <!-- GitHub Card -->
-                        <div class="contact-box" onclick="window.open('https://github.com/detboxx', '_blank')">
-                            <div class="contact-box-icon violet"><i class="fa-brands fa-github"></i></div>
-                            <div class="contact-box-content">
-                                <span class="box-lbl">GITHUB PROFILE</span>
-                                <span class="box-val">github.com/detboxx</span>
-                            </div>
-                            <button class="copy-action-btn" title="Open GitHub"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                        <div class="contact-term-card" onclick="window.open('https://github.com/detboxx', '_blank')">
+                            <span class="term-label">GITHUB:</span>
+                            <span class="term-val">github.com/detboxx</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square copy-icon"></i>
                         </div>
-
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-    </main>
+        </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <p>© 2026 DetDev. All rights reserved.</p>
-        </div>
-    </footer>
+        <!-- Terminal Footer Bar -->
+        <footer class="terminal-footer">
+            <span class="footer-left">STATUS: 200 OK | TERMINAL ACTIVE</span>
+            <span class="footer-right">© 2026 DetDev. All rights reserved.</span>
+        </footer>
+
+    </div>
 
     <!-- Toast Notification -->
-    <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Copied to clipboard!</span></div>
+    <div class="toast" id="toast"><i class="fa-solid fa-terminal"></i> <span id="toastMsg">Command executed!</span></div>
 
     <script src="app.js"></script>
 </body>
