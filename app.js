@@ -1,11 +1,11 @@
-// Detboxx Personal Portfolio Logic
+// Detboxx Developer & Modder Website Logic
 
 document.addEventListener('DOMContentLoaded', () => {
     initMobileNav();
     initScrollSpy();
 });
 
-// Mobile Navigation Drawer Toggle
+// Mobile Navigation Toggle
 function initMobileNav() {
     const toggleBtn = document.getElementById('mobileToggle');
     const navLinks = document.getElementById('navLinks');
@@ -16,7 +16,7 @@ function initMobileNav() {
         });
     }
 
-    // Close mobile nav when clicking a link
+    // Close menu when clicking a link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             if (navLinks) navLinks.classList.remove('mobile-open');
@@ -47,21 +47,22 @@ function initScrollSpy() {
     });
 }
 
-// Contact Info Copy to Clipboard
+// Copy Contact to Clipboard
 function copyContact(textToCopy) {
     navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast(`Copied ${textToCopy} to clipboard!`);
+        showToast(`Copied: ${textToCopy}`);
     }).catch(err => {
         console.error('Failed to copy: ', err);
     });
 }
 
-// Toast Notification System
+// Toast Notification
 function showToast(message) {
     const toast = document.getElementById('toast');
-    if (!toast) return;
+    const toastMsg = document.getElementById('toastMsg');
+    if (!toast || !toastMsg) return;
 
-    toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`;
+    toastMsg.innerText = message;
     toast.classList.add('show');
 
     setTimeout(() => {
