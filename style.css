@@ -258,24 +258,18 @@ strong{color:#e2e8f0}
 
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 
-/* Brand logo container */
+/* Brand logo container — SVG carries its own bg+border */
 .blogo{
-  display:flex;align-items:center;justify-content:center;
-  height:36px;padding:0 6px;border-radius:9px;
-  flex-shrink:0;overflow:hidden;
+  display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;line-height:0;
 }
-.blogo svg{display:block}
+.blogo svg{display:block;border-radius:8px}
 
-.blogo-mi    {background:rgba(255,105,0,.1);border:1px solid rgba(255,105,0,.2)}
-.blogo-redmi {background:rgba(220,50,50,.1);border:1px solid rgba(220,50,50,.2)}
-.blogo-asus  {background:rgba(0,160,227,.1);border:1px solid rgba(0,160,227,.2)}
-.blogo-zte   {background:rgba(0,91,172,.1);border:1px solid rgba(0,91,172,.2)}
-.blogo-isp   {background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2)}
-.blogo-hw    {background:rgba(207,10,44,.1);border:1px solid rgba(207,10,44,.2)}
-.blogo-gl    {background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2)}
-.blogo-mt    {background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.2)}
-.blogo-ng    {background:rgba(227,24,55,.1);border:1px solid rgba(227,24,55,.2)}
-.blogo-mc    {background:rgba(30,144,255,.1);border:1px solid rgba(30,144,255,.2)}
+/* per-brand size hints (no extra bg needed — SVG draws it) */
+.blogo-mi,.blogo-redmi,.blogo-asus,.blogo-zte,
+.blogo-isp,.blogo-hw,.blogo-gl,.blogo-mt,
+.blogo-ng,.blogo-mc{background:transparent;border:none}
+
 
 
 /* Diff badge */
@@ -535,3 +529,95 @@ strong{color:#e2e8f0}
 /* ─── SELECTION COLOR ─── */
 ::selection{background:rgba(108,99,255,.35);color:#fff}
 
+/* ══════════════════════════════════════════════════
+   SERVICES SECTION
+══════════════════════════════════════════════════ */
+.sec-services{background:linear-gradient(180deg,rgba(108,99,255,.04),rgba(59,130,246,.03))}
+
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.svc-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;padding:26px;
+  position:relative;overflow:hidden;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+  display:flex;flex-direction:column;gap:16px;
+}
+.svc-card:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.svc-line  {border-top:3px solid #06C755}
+.svc-tiktok{border-top:3px solid #fe2c55}
+.svc-router{border-top:3px solid #6c63ff}
+.svc-line:hover  {border-color:#06C755;box-shadow:0 20px 60px rgba(6,199,85,.15)}
+.svc-tiktok:hover{border-color:#fe2c55;box-shadow:0 20px 60px rgba(254,44,85,.15)}
+.svc-router:hover{border-color:#6c63ff;box-shadow:0 20px 60px rgba(108,99,255,.2)}
+
+.svc-badge-top{
+  position:absolute;top:16px;right:16px;
+  padding:4px 12px;border-radius:20px;
+  background:rgba(254,44,85,.15);border:1px solid rgba(254,44,85,.3);
+  color:#fe2c55;font-size:.7rem;font-weight:800;letter-spacing:.3px;
+}
+
+.svc-header{display:flex;align-items:center;gap:15px}
+.svc-icon-wrap{
+  width:50px;height:50px;border-radius:13px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.35rem;
+}
+.svc-icon-line  {background:rgba(6,199,85,.14);border:1px solid rgba(6,199,85,.28);color:#06C755}
+.svc-icon-tiktok{background:rgba(254,44,85,.14);border:1px solid rgba(254,44,85,.28);color:#fe2c55}
+.svc-icon-router{background:rgba(108,99,255,.14);border:1px solid rgba(108,99,255,.28);color:#818cf8}
+
+.svc-title{font-size:1.1rem;font-weight:900;color:#f1f5f9;display:block;line-height:1.2}
+.svc-sub  {font-size:.76rem;color:#475569;display:block;margin-top:3px}
+
+.svc-desc{color:#94a3b8;font-size:.85rem;line-height:1.85;flex-shrink:0}
+
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:7px;flex:1}
+.svc-list li{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:.83rem;color:#94a3b8;line-height:1.65;
+}
+.svc-list li i{color:#34d399;flex-shrink:0;margin-top:3px;font-size:.72rem}
+
+.svc-specs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spec-item{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  border-radius:9px;padding:9px 11px;
+}
+.spec-item strong{display:block;font-size:.65rem;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.spec-item span{font-size:.84rem;color:#e2e8f0;font-weight:700}
+
+.svc-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:16px;border-top:1px solid rgba(255,255,255,.06);
+  gap:12px;flex-wrap:wrap;margin-top:auto;
+}
+.svc-pricing{display:flex;align-items:baseline;gap:5px}
+.svc-price{font-size:1.2rem;font-weight:900;color:#f1f5f9}
+.svc-unit{font-size:.76rem;color:#475569}
+
+.svc-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 20px;border-radius:10px;
+  font-size:.83rem;font-weight:700;
+  transition:all .2s;white-space:nowrap;border:none;
+  text-decoration:none;
+}
+.svc-btn-line  {background:#06C755;color:#fff}
+.svc-btn-line:hover{background:#05a847;transform:scale(1.04)}
+.svc-btn-tiktok{background:linear-gradient(135deg,#fe2c55,#ff6b35);color:#fff;box-shadow:0 4px 16px rgba(254,44,85,.35)}
+.svc-btn-tiktok:hover{filter:brightness(1.1);transform:scale(1.04)}
+.svc-btn-router{background:linear-gradient(135deg,#6c63ff,#3b82f6);color:#fff;box-shadow:0 4px 16px rgba(108,99,255,.35)}
+.svc-btn-router:hover{filter:brightness(1.1);transform:scale(1.04)}
+
+@media(max-width:960px){.svc-grid{grid-template-columns:1fr}}
+@media(max-width:640px){
+  .svc-footer{flex-direction:column;align-items:flex-start}
+  .svc-btn{width:100%;justify-content:center}
+}
