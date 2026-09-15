@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="คู่มือปลดล็อคเราเตอร์ฉบับสมบูรณ์ โดยทีม WS Tech — SSH, OpenWrt, Custom Firmware">
-<meta name="keywords" content="ปลดล็อคเราเตอร์, router unlock, OpenWrt, SSH router, Xiaomi unlock, ZTE unlock">
-<meta name="author" content="WS Tech">
-<meta property="og:title" content="คู่มือปลดล็อคเราเตอร์ | WS Tech">
-<meta property="og:description" content="ข้อมูลปลดล็อคเราเตอร์ 15 รุ่น จากประสบการณ์จริง ทีม WS Tech">
+<meta name="description" content="คู่มือปลดล็อคเราเตอร์จากประสบการณ์จริง — ไม่ได้ copy wiki มาเรียบเรียงใหม่ เขียนจากที่ทำมาเองกับมือ ครอบคลุม 15 รุ่นยอดนิยมในไทย">
+<meta name="keywords" content="ปลดล็อคเราเตอร์, router unlock, OpenWrt ไทย, SSH router, custom firmware, Xiaomi AX3000T unlock, ZTE F6600, ASUS Merlin">
+<meta name="author" content="WS Tech — ws.in.th">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="คู่มือปลดล็อคเราเตอร์ | WS Tech Router Lab">
+<meta property="og:description" content="ข้อมูลจากที่ทำมาจริง ไม่ใช่ copy wiki — 15 รุ่น พร้อมเทคนิคที่หาไม่ได้จากที่อื่น">
 <meta property="og:url" content="https://www.ws.in.th">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>คู่มือปลดล็อคเราเตอร์ | WS Tech</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- BG Layer -->
+<!-- BG -->
 <div class="bg-layer" aria-hidden="true">
   <div class="bg-grid"></div>
   <div class="bg-glow g1"></div>
@@ -32,7 +34,12 @@
 <header class="navbar" id="navbar">
   <div class="nav-wrap">
     <a href="#top" class="nav-logo">
-      <span class="nav-logo-icon"><i class="fa-solid fa-wifi"></i></span>
+      <span class="nav-logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white" stroke="none"/>
+        </svg>
+      </span>
       <span class="nav-logo-text">WS<span>Tech</span></span>
     </a>
     <nav class="nav-menu" id="navMenu">
@@ -43,7 +50,7 @@
     </nav>
     <div class="nav-end">
       <span class="nav-pill"><i class="fa-solid fa-circle-dot"></i> 15 รุ่น</span>
-      <button class="nav-ham" id="navHam" aria-label="menu">
+      <button class="nav-ham" id="navHam" aria-label="menu" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
@@ -53,33 +60,47 @@
 <!-- Hero -->
 <section class="hero" id="top">
   <div class="hero-inner">
-    <div class="hero-badge"><i class="fa-solid fa-unlock-keyhole"></i> Router Unlock Lab · WS Tech</div>
-    <h1 class="hero-h1">คู่มือ<span class="hl">ปลดล็อค</span><br>เราเตอร์</h1>
-    <p class="hero-sub">ข้อมูลจากประสบการณ์จริง — ไม่ใช่แค่ copy wiki<br>ครอบคลุม <strong>15 รุ่น / ยี่ห้อ</strong> พร้อมเทคนิคพิเศษที่หาไม่ได้จากที่อื่น</p>
+    <div class="hero-badge">
+      <i class="fa-solid fa-unlock-keyhole"></i>&nbsp; Router Unlock Lab — WS Tech
+    </div>
+    <h1 class="hero-h1">
+      <span class="hl">ปลดล็อค</span>เราเตอร์<br>
+      <span class="hero-sub-title">จากที่ทำมาจริง ไม่ใช่ copy wiki</span>
+    </h1>
+    <p class="hero-desc">
+      รวม 15 รุ่นยอดนิยมในไทย — Xiaomi, ASUS, ZTE ISP, GL.iNet, MikroTik ฯลฯ<br>
+      ทุกขั้นตอนมาจากที่ทำมาเองกับมือ บางอย่างหาไม่ได้ที่ไหนอีกแล้ว
+    </p>
     <div class="hero-nums">
-      <div class="hero-num"><strong>15+</strong><small>รุ่น</small></div>
+      <div class="hero-num"><strong>15</strong><small>รุ่น/ยี่ห้อ</small></div>
       <div class="hero-sep"></div>
-      <div class="hero-num"><strong>3</strong><small>ระดับ</small></div>
+      <div class="hero-num"><strong>3</strong><small>ระดับความยาก</small></div>
       <div class="hero-sep"></div>
-      <div class="hero-num"><strong>100%</strong><small>ต้นฉบับ</small></div>
+      <div class="hero-num"><strong>100%</strong><small>ข้อมูลต้นฉบับ</small></div>
     </div>
     <div class="hero-btns">
-      <a href="#guides" class="btn-main"><i class="fa-solid fa-book-open-reader"></i> เริ่มอ่านคู่มือ</a>
+      <a href="#guides" class="btn-main"><i class="fa-solid fa-book-open-reader"></i> ดูคู่มือทั้งหมด</a>
       <a href="#tools" class="btn-outline"><i class="fa-solid fa-toolbox"></i> เครื่องมือ</a>
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">
     <div class="ha-box">
-      <div class="ha-center"><i class="fa-solid fa-router"></i></div>
+      <div class="ha-center">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round">
+          <rect x="2" y="6" width="20" height="12" rx="2"/>
+          <path d="M6 10h.01M6 14h.01M10 10h8M10 14h4"/>
+          <path d="M2 10h-.5M22 10h.5M2 14h-.5M22 14h.5"/>
+        </svg>
+      </div>
       <div class="ha-ring r1"></div>
       <div class="ha-ring r2"></div>
       <div class="ha-ring r3"></div>
-      <span class="ha-label" style="top:5%;left:55%">OpenWrt</span>
-      <span class="ha-label" style="top:30%;left:88%">SSH</span>
-      <span class="ha-label" style="top:68%;left:82%">UART</span>
-      <span class="ha-label" style="top:85%;left:42%">Telnet</span>
-      <span class="ha-label" style="top:68%;left:3%">TFTP</span>
-      <span class="ha-label" style="top:28%;left:2%">Web RCE</span>
+      <span class="ha-label" style="top:4%;left:52%">OpenWrt</span>
+      <span class="ha-label" style="top:28%;left:87%">SSH</span>
+      <span class="ha-label" style="top:68%;left:80%">UART</span>
+      <span class="ha-label" style="top:86%;left:40%">Telnet</span>
+      <span class="ha-label" style="top:68%;left:2%">TFTP</span>
+      <span class="ha-label" style="top:28%;left:1%">Web RCE</span>
     </div>
   </div>
 </section>
@@ -88,34 +109,37 @@
 <div class="warn-bar">
   <div class="wrap">
     <i class="fa-solid fa-triangle-exclamation"></i>
-    <span><strong>คำเตือน:</strong> การปลดล็อคเราเตอร์อาจทำให้การรับประกันหมดอายุ มีความเสี่ยงอุปกรณ์เสียหายถาวร (brick) ข้อมูลเพื่อการศึกษาเท่านั้น</span>
+    <span><strong>คำเตือน:</strong> การปลดล็อคเราเตอร์มีความเสี่ยงอุปกรณ์เสียหายถาวร และอาจผิดเงื่อนไข ISP ทำด้วยความเข้าใจ บนความเสี่ยงของตัวเอง — ข้อมูลนี้เพื่อการศึกษาเท่านั้น</span>
   </div>
 </div>
 
-<!-- Guide Cards -->
+<!-- Guides -->
 <section class="sec" id="guides">
   <div class="wrap">
     <div class="sec-head">
-      <h2>เลือกเราเตอร์ที่ต้องการ</h2>
-      <p>คลิกที่การ์ดเพื่อดูขั้นตอนและเทคนิคแบบละเอียด</p>
+      <h2>เลือกรุ่นที่ต้องการ</h2>
+      <p>คลิกที่การ์ดเพื่อดูขั้นตอนฉบับเต็ม + เทคนิคที่ได้จากการทดลองจริง</p>
     </div>
 
-    <!-- Filter -->
     <div class="filters" id="filters">
       <button class="flt active" data-f="all">ทั้งหมด</button>
       <button class="flt" data-f="easy">🟢 ง่าย</button>
       <button class="flt" data-f="medium">🟡 ปานกลาง</button>
-      <button class="flt" data-f="hard">🔴 ยาก</button>
+      <button class="flt" data-f="hard">🔴 ยาก / Expert</button>
       <button class="flt" data-f="thai">🇹🇭 ISP ไทย</button>
     </div>
 
-    <!-- Grid -->
     <div class="grid" id="grid">
 
-      <!-- XIAOMI AX3000T -->
+      <!-- ── Xiaomi AX3000T ── -->
       <div class="card" data-d="easy" data-t="0" data-id="ax3000t">
         <div class="card-top">
-          <span class="brand-chip c-mi">MI</span>
+          <!-- Xiaomi Logo -->
+          <span class="blogo blogo-mi">
+            <svg width="38" height="22" viewBox="0 0 60 36" fill="none">
+              <text x="0" y="28" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="30" fill="#FF6900">mi</text>
+            </svg>
+          </span>
           <span class="badge easy">ง่าย</span>
         </div>
         <h3>Xiaomi AX3000T</h3>
@@ -123,44 +147,57 @@
         <div class="tags"><span>SSH Exploit</span><span>Web API RCE</span><span>OpenWrt ✓</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำ</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- XIAOMI AX9000 -->
+      <!-- ── Xiaomi AX9000 ── -->
       <div class="card" data-d="medium" data-t="0" data-id="ax9000">
         <div class="card-top">
-          <span class="brand-chip c-mi">MI</span>
+          <span class="blogo blogo-mi">
+            <svg width="38" height="22" viewBox="0 0 60 36" fill="none">
+              <text x="0" y="28" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="30" fill="#FF6900">mi</text>
+            </svg>
+          </span>
           <span class="badge medium">ปานกลาง</span>
         </div>
         <h3>Xiaomi AX9000</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> IPQ8072A Quad-Core · Wi-Fi 6</p>
-        <div class="tags"><span>SSH Enable</span><span>SN Key Gen</span><span>OpenWrt ✓</span></div>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> IPQ8072A Quad-Core · Tri-band</p>
+        <div class="tags"><span>SN Key Gen</span><span>Telnet→SSH</span><span>OpenWrt ✓</span></div>
         <div class="card-bot">
           <span class="risk med"><i class="fa-solid fa-shield-halved"></i> Risk กลาง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- XIAOMI BE7000 -->
+      <!-- ── Xiaomi BE7000 ── -->
       <div class="card" data-d="hard" data-t="0" data-id="be7000">
         <div class="card-top">
-          <span class="brand-chip c-mi">MI</span>
+          <span class="blogo blogo-mi">
+            <svg width="38" height="22" viewBox="0 0 60 36" fill="none">
+              <text x="0" y="28" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="30" fill="#FF6900">mi</text>
+            </svg>
+          </span>
           <span class="badge hard">ยาก</span>
         </div>
-        <h3>Xiaomi BE7000</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> IPQ9574 · Wi-Fi 7 (NEW)</p>
+        <h3>Xiaomi BE7000 <em>Wi-Fi 7</em></h3>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> IPQ9574 · 6GHz · Wi-Fi 7</p>
         <div class="tags"><span>xmir-patcher</span><span>Docker Stock</span><span>Experimental</span></div>
         <div class="card-bot">
           <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk สูง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- REDMI AX6000 -->
+      <!-- ── Redmi AX6000 ── -->
       <div class="card" data-d="medium" data-t="0" data-id="ax6000">
         <div class="card-top">
-          <span class="brand-chip c-mi">MI</span>
+          <span class="blogo blogo-redmi">
+            <svg width="40" height="22" viewBox="0 0 70 32" fill="none">
+              <rect width="70" height="32" rx="4" fill="rgba(220,50,50,0.15)"/>
+              <text x="5" y="24" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="18" fill="#E53935">Redmi</text>
+            </svg>
+          </span>
           <span class="badge medium">ปานกลาง</span>
         </div>
         <h3>Redmi AX6000</h3>
@@ -168,44 +205,56 @@
         <div class="tags"><span>API Exploit</span><span>ImmortalWrt</span><span>2Gbps NAT</span></div>
         <div class="card-bot">
           <span class="risk med"><i class="fa-solid fa-shield-halved"></i> Risk กลาง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- ASUS AX88U -->
+      <!-- ── ASUS RT-AX88U ── -->
       <div class="card" data-d="easy" data-t="0" data-id="rtax88u">
         <div class="card-top">
-          <span class="brand-chip c-asus">ASUS</span>
+          <span class="blogo blogo-asus">
+            <svg width="60" height="22" viewBox="0 0 90 30" fill="none">
+              <text x="0" y="24" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="26" letter-spacing="-1" fill="#00A0E3">ASUS</text>
+            </svg>
+          </span>
           <span class="badge easy">ง่ายมาก</span>
         </div>
         <h3>ASUS RT-AX88U</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> Broadcom BCM4908 · Wi-Fi 6</p>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> BCM4908 Quad · 8-port LAN</p>
         <div class="tags"><span>SSH Built-in</span><span>Merlin FW</span><span>Entware</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำมาก</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- ASUS TUF-AX4200 -->
+      <!-- ── ASUS TUF-AX4200 ── -->
       <div class="card" data-d="easy" data-t="0" data-id="tufax4200">
         <div class="card-top">
-          <span class="brand-chip c-asus">ASUS</span>
+          <span class="blogo blogo-asus">
+            <svg width="60" height="22" viewBox="0 0 90 30" fill="none">
+              <text x="0" y="24" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="26" letter-spacing="-1" fill="#00A0E3">ASUS</text>
+            </svg>
+          </span>
           <span class="badge easy">ง่าย</span>
         </div>
         <h3>ASUS TUF-AX4200</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7986A Filogic 830 · AX4200</p>
-        <div class="tags"><span>Web Flash</span><span>OpenWrt ✓</span><span>UART Pogo</span></div>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7986A Filogic 830 · 2.5G WAN</p>
+        <div class="tags"><span>Web Flash</span><span>OpenWrt ✓</span><span>UART Pogo Pin</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำ</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- ZTE F6600 -->
+      <!-- ── ZTE F6600 ── -->
       <div class="card" data-d="hard" data-t="1" data-id="f6600">
         <div class="card-top">
-          <span class="brand-chip c-zte">ZTE</span>
+          <span class="blogo blogo-zte">
+            <svg width="44" height="22" viewBox="0 0 60 30" fill="none">
+              <text x="0" y="24" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="26" fill="#005BAC">ZTE</text>
+            </svg>
+          </span>
           <span class="badge hard">ยาก</span>
         </div>
         <h3>ZTE F6600 <em>🇹🇭 ISP</em></h3>
@@ -213,44 +262,66 @@
         <div class="tags"><span>Config Decrypt</span><span>AES-128</span><span>Bridge Mode</span></div>
         <div class="card-bot">
           <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk สูง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- ZTE F6107 -->
+      <!-- ── ZTE F6107 ── -->
       <div class="card" data-d="hard" data-t="1" data-id="f6107">
         <div class="card-top">
-          <span class="brand-chip c-zte">ZTE</span>
+          <span class="blogo blogo-zte">
+            <svg width="44" height="22" viewBox="0 0 60 30" fill="none">
+              <text x="0" y="24" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="26" fill="#005BAC">ZTE</text>
+            </svg>
+          </span>
           <span class="badge hard">ยาก</span>
         </div>
         <h3>ZTE F6107A <em>🇹🇭 ISP</em></h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7628 · EPON/GPON</p>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7628 · EPON/GPON ONU</p>
         <div class="tags"><span>Telnet Default</span><span>Config Decrypt</span><span>UART</span></div>
         <div class="card-bot">
           <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk สูง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- ISP OEM -->
+      <!-- ── ISP OEM ── -->
       <div class="card" data-d="hard" data-t="1" data-id="ispoem">
         <div class="card-top">
-          <span class="brand-chip c-isp">ISP</span>
+          <span class="blogo blogo-isp">
+            <svg width="44" height="22" viewBox="0 0 60 30" fill="none">
+              <text x="0" y="24" font-family="'Inter','Arial',sans-serif" font-weight="800" font-size="20" fill="#8B5CF6">NT·AIS<tspan fill="#a78bfa" font-size="14">·TOT</tspan></text>
+            </svg>
+          </span>
           <span class="badge hard">Expert</span>
         </div>
-        <h3>TOT / NT / AIS OEM <em>🇹🇭</em></h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> ZTE/Huawei/Nokia · GPON</p>
+        <h3>ISP OEM Thailand <em>🇹🇭</em></h3>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> ZTE / Huawei / Nokia · GPON</p>
         <div class="tags"><span>Config Decrypt</span><span>Bridge Mode</span><span>UART</span></div>
         <div class="card-bot">
           <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk สูงมาก</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- Huawei -->
+      <!-- ── Huawei AX3 ── -->
       <div class="card" data-d="hard" data-t="0" data-id="huaweiax3">
         <div class="card-top">
-          <span class="brand-chip c-hw">HW</span>
+          <span class="blogo blogo-hw">
+            <!-- Huawei flower logo (8 petals) -->
+            <svg width="28" height="28" viewBox="0 0 40 40">
+              <g transform="translate(20,20)" fill="#CF0A2C">
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(0)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(45)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(135)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(225)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-9" rx="3.2" ry="7" transform="rotate(315)"/>
+              </g>
+            </svg>
+          </span>
           <span class="badge hard">ยาก</span>
         </div>
         <h3>Huawei AX3 / Honor 3</h3>
@@ -258,74 +329,96 @@
         <div class="tags"><span>Telnet Hidden</span><span>No OpenWrt</span><span>Stock Only</span></div>
         <div class="card-bot">
           <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk สูง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- GL.iNet Beryl AX -->
+      <!-- ── GL.iNet Beryl AX ── -->
       <div class="card" data-d="easy" data-t="0" data-id="berylax">
         <div class="card-top">
-          <span class="brand-chip c-gl">GL</span>
+          <span class="blogo blogo-gl">
+            <svg width="52" height="22" viewBox="0 0 80 32" fill="none">
+              <rect width="80" height="32" rx="5" fill="rgba(6,182,212,0.12)"/>
+              <text x="7" y="23" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="20" fill="#06B6D4">GL.iNet</text>
+            </svg>
+          </span>
           <span class="badge easy">ง่ายมาก</span>
         </div>
         <h3>GL.iNet Beryl AX (MT3000)</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7981B Filogic 820 · Wi-Fi 6</p>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7981B Filogic 820 · Travel</p>
         <div class="tags"><span>SSH Default</span><span>OpenWrt Pre</span><span>WireGuard ✓</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำมาก</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- GL.iNet Flint 2 -->
+      <!-- ── GL.iNet Flint 2 ── -->
       <div class="card" data-d="easy" data-t="0" data-id="flint2">
         <div class="card-top">
-          <span class="brand-chip c-gl">GL</span>
+          <span class="blogo blogo-gl">
+            <svg width="52" height="22" viewBox="0 0 80 32" fill="none">
+              <rect width="80" height="32" rx="5" fill="rgba(6,182,212,0.12)"/>
+              <text x="7" y="23" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="20" fill="#06B6D4">GL.iNet</text>
+            </svg>
+          </span>
           <span class="badge easy">ง่ายมาก</span>
         </div>
         <h3>GL.iNet Flint 2 (MT6000)</h3>
         <p class="chip-label"><i class="fa-solid fa-microchip"></i> MT7986A Filogic 830 · 8GB eMMC</p>
-        <div class="tags"><span>Docker ✓</span><span>WireGuard 900M</span><span>NAS</span></div>
+        <div class="tags"><span>Docker ✓</span><span>WireGuard ~920M</span><span>NAS</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำมาก</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- MikroTik -->
+      <!-- ── MikroTik ── -->
       <div class="card" data-d="easy" data-t="0" data-id="hapax3">
         <div class="card-top">
-          <span class="brand-chip c-mt">MK</span>
-          <span class="badge easy">Open by Default</span>
+          <span class="blogo blogo-mt">
+            <svg width="60" height="22" viewBox="0 0 95 30" fill="none">
+              <text x="0" y="23" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="21" fill="#FF6600">MikroTik</text>
+            </svg>
+          </span>
+          <span class="badge easy">Open Default</span>
         </div>
         <h3>MikroTik hAP ax3</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> Qualcomm IPQ-6010 · RouterOS 7</p>
-        <div class="tags"><span>Full Control</span><span>Container/Docker</span><span>RouterOS</span></div>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> IPQ-6010 · RouterOS 7</p>
+        <div class="tags"><span>Full Control</span><span>Container</span><span>BGP/OSPF</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำมาก</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- Netgear RAX50 -->
+      <!-- ── Netgear RAX50 ── -->
       <div class="card" data-d="medium" data-t="0" data-id="rax50">
         <div class="card-top">
-          <span class="brand-chip c-ng">NG</span>
+          <span class="blogo blogo-ng">
+            <svg width="62" height="22" viewBox="0 0 96 30" fill="none">
+              <text x="0" y="23" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="21" fill="#E31837">NETGEAR</text>
+            </svg>
+          </span>
           <span class="badge medium">ปานกลาง</span>
         </div>
         <h3>Netgear Nighthawk RAX50</h3>
-        <p class="chip-label"><i class="fa-solid fa-microchip"></i> Qualcomm IPQ8074 · Wi-Fi 6</p>
+        <p class="chip-label"><i class="fa-solid fa-microchip"></i> IPQ8074 Quad · Wi-Fi 6</p>
         <div class="tags"><span>Magic Packet</span><span>Telnet Shell</span><span>DD-WRT</span></div>
         <div class="card-bot">
           <span class="risk med"><i class="fa-solid fa-shield-halved"></i> Risk กลาง</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
-      <!-- Mercusys MR90X -->
+      <!-- ── Mercusys MR90X ── -->
       <div class="card" data-d="easy" data-t="0" data-id="mr90x">
         <div class="card-top">
-          <span class="brand-chip c-tp">MC</span>
+          <span class="blogo blogo-mc">
+            <svg width="62" height="22" viewBox="0 0 100 30" fill="none">
+              <text x="0" y="23" font-family="'Inter','Arial',sans-serif" font-weight="900" font-size="19" fill="#1E90FF">Mercusys</text>
+            </svg>
+          </span>
           <span class="badge easy">ง่าย</span>
         </div>
         <h3>Mercusys MR90X v1</h3>
@@ -333,7 +426,7 @@
         <div class="tags"><span>Web Flash</span><span>OpenWrt ✓</span><span>HW Offload 1.8G</span></div>
         <div class="card-bot">
           <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk ต่ำ</span>
-          <button class="read-btn">อ่านเพิ่ม <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="read-btn">ดูคู่มือ <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
@@ -345,39 +438,39 @@
 <section class="sec sec-alt" id="tools">
   <div class="wrap">
     <div class="sec-head">
-      <h2>เครื่องมือที่ใช้บ่อย</h2>
-      <p>Software ที่ทีม WS Tech ใช้จริงในการปลดล็อค</p>
+      <h2>เครื่องมือที่ใช้จริง</h2>
+      <p>ทุกอย่างในลิสต์นี้คืออุปกรณ์และโปรแกรมที่ใช้งานจริง ไม่ใช่แค่แนะนำตามกระแส</p>
     </div>
     <div class="tool-grid">
       <a class="tool-card" href="https://www.putty.org" target="_blank" rel="noopener">
         <div class="tool-ico"><i class="fa-solid fa-terminal"></i></div>
         <h4>PuTTY / OpenSSH</h4>
-        <p>SSH Client สำหรับเข้าถึง shell เราเตอร์</p>
+        <p>SSH client หลักที่ใช้ทุกครั้ง — ใช้ Windows ก็ PuTTY, Linux/Mac ก็ built-in ssh</p>
       </a>
       <a class="tool-card" href="https://winscp.net" target="_blank" rel="noopener">
         <div class="tool-ico"><i class="fa-solid fa-file-arrow-up"></i></div>
-        <h4>WinSCP / SCP</h4>
-        <p>ถ่ายโอนไฟล์ firmware ผ่าน SSH</p>
+        <h4>WinSCP</h4>
+        <p>ลาก-วาง firmware ข้ามไปเราเตอร์ผ่าน SCP — ง่ายกว่าพิมพ์ scp command มาก</p>
       </a>
       <a class="tool-card" href="https://www.wireshark.org" target="_blank" rel="noopener">
         <div class="tool-ico"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
         <h4>Wireshark</h4>
-        <p>ดักจับ packet เพื่อหา API endpoint ซ่อน</p>
+        <p>ใช้ดัก packet เวลา reverse engineer API เราเตอร์ ISP หา endpoint ซ่อน</p>
       </a>
       <a class="tool-card" href="https://www.python.org" target="_blank" rel="noopener">
         <div class="tool-ico"><i class="fa-brands fa-python"></i></div>
-        <h4>Python 3 + Paramiko</h4>
-        <p>Script อัตโนมัติ SSH / exploit automation</p>
+        <h4>Python 3</h4>
+        <p>รัน exploit script ต่างๆ — xmir-patcher, zte-config-utility ล้วนเขียนด้วย Python</p>
       </a>
-      <a class="tool-card" href="#" target="_blank" rel="noopener">
+      <a class="tool-card" href="https://www.aliexpress.com/w/wholesale-CH341A.html" target="_blank" rel="noopener">
         <div class="tool-ico"><i class="fa-solid fa-microchip"></i></div>
-        <h4>CH341A Programmer</h4>
-        <p>อ่าน/เขียน Flash chip กรณี brick รุนแรง</p>
+        <h4>CH341A Flash Programmer</h4>
+        <p>ซื้อตัวนี้ไว้ก่อนเลย — ถ้า brick จนบูตไม่ขึ้น มีตัวนี้กู้ได้เกือบทุกกรณี</p>
       </a>
       <a class="tool-card" href="https://firmware-selector.openwrt.org" target="_blank" rel="noopener">
         <div class="tool-ico"><i class="fa-solid fa-globe"></i></div>
         <h4>OpenWrt Firmware Selector</h4>
-        <p>เลือก firmware ที่ถูกต้องสำหรับรุ่นของคุณ</p>
+        <p>เลือก firmware ถูกรุ่น ถูก version — อย่า flash image มั่วๆ จากที่อื่น</p>
       </a>
     </div>
   </div>
@@ -388,19 +481,19 @@
   <div class="wrap">
     <div class="about-layout">
       <div class="about-left">
-        <span class="about-pill">เกี่ยวกับเรา · About Us</span>
-        <h2>WS Tech<br><span>Router Lab</span></h2>
-        <p>กลุ่มนักพัฒนาและ firmware modder ที่มีความหลงใหลในการ reverse engineer อุปกรณ์ network — ข้อมูลทุกอย่างมาจากการทดสอบจริงด้วยอุปกรณ์จริง ไม่ใช่ copy จาก wiki</p>
-        <p>เชี่ยวชาญ: <strong>Embedded Linux · Custom Firmware · GPON/ONU Hacking · AES Config Decryption · EasyMesh Protocol</strong></p>
+        <span class="about-pill">เกี่ยวกับ WS Tech</span>
+        <h2>ทำมาเองจริง<br><span>ไม่ได้แค่เขียนบล็อก</span></h2>
+        <p>WS Tech ไม่ใช่เว็บรีวิวทั่วไป — ทุกขั้นตอนในคู่มือนี้ผ่านมือของเราก่อน ถ้าบอกว่าทำได้ แปลว่าเราทำมาแล้ว ถ้าบอกว่า brick ได้ แปลว่าเราเคย brick มาแล้วเหมือนกัน</p>
+        <p>เชี่ยวชาญ: <strong>Embedded Linux · Custom Firmware · GPON/ONU Hacking · AES Config Decrypt · EasyMesh Protocol Analysis</strong></p>
         <div class="skill-tags">
           <span><i class="fa-solid fa-code"></i> Embedded Dev</span>
           <span><i class="fa-solid fa-unlock"></i> Firmware Modder</span>
-          <span><i class="fa-solid fa-shield-halved"></i> Network Security</span>
-          <span><i class="fa-brands fa-linux"></i> OpenWrt Expert</span>
+          <span><i class="fa-solid fa-shield-halved"></i> Network Sec</span>
+          <span><i class="fa-brands fa-linux"></i> OpenWrt</span>
         </div>
       </div>
       <div class="about-right">
-        <div class="abox"><span class="abox-n">15+</span><span class="abox-l">รุ่นทดสอบจริง</span></div>
+        <div class="abox"><span class="abox-n">15+</span><span class="abox-l">รุ่นที่ทดสอบจริง</span></div>
         <div class="abox"><span class="abox-n">3+</span><span class="abox-l">ปีประสบการณ์</span></div>
         <div class="abox"><span class="abox-n">100%</span><span class="abox-l">ข้อมูลต้นฉบับ</span></div>
         <div class="abox"><span class="abox-n">🇹🇭 ISP</span><span class="abox-l">เชี่ยวชาญพิเศษ</span></div>
@@ -414,16 +507,25 @@
   <div class="wrap">
     <div class="footer-layout">
       <div class="footer-brand">
-        <div class="nav-logo"><span class="nav-logo-icon"><i class="fa-solid fa-wifi"></i></span><span class="nav-logo-text">WS<span>Tech</span></span></div>
-        <p>คู่มือปลดล็อคเราเตอร์จากประสบการณ์จริง</p>
-        <p class="footer-credit">Crafted with ❤️ by <strong>WS Tech Team</strong> · ws.in.th</p>
+        <a href="#top" class="nav-logo" style="display:inline-flex">
+          <span class="nav-logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white" stroke="none"/>
+            </svg>
+          </span>
+          <span class="nav-logo-text">WS<span>Tech</span></span>
+        </a>
+        <p>คู่มือปลดล็อคเราเตอร์จากประสบการณ์จริง<br>Router Unlock Knowledge Base — ws.in.th</p>
+        <p class="footer-credit">Crafted by <strong>WS Tech Team</strong> · © 2025</p>
       </div>
       <div class="footer-links">
         <h5>คู่มือ</h5>
-        <a href="#guides">Xiaomi Routers</a>
+        <a href="#guides">Xiaomi / Redmi</a>
         <a href="#guides">ASUS Routers</a>
-        <a href="#guides">ZTE / ISP Thailand</a>
+        <a href="#guides">ZTE ISP Thailand</a>
         <a href="#guides">GL.iNet Routers</a>
+        <a href="#guides">MikroTik / Netgear</a>
       </div>
       <div class="footer-links">
         <h5>ข้อมูล</h5>
@@ -431,16 +533,17 @@
         <a href="#about">เกี่ยวกับเรา</a>
         <a href="https://openwrt.org" target="_blank" rel="noopener">OpenWrt.org ↗</a>
         <a href="https://firmware-selector.openwrt.org" target="_blank" rel="noopener">FW Selector ↗</a>
+        <a href="https://forum.openwrt.org" target="_blank" rel="noopener">OpenWrt Forum ↗</a>
       </div>
     </div>
     <div class="footer-bottom">
       <p>© 2025 WS Tech · ws.in.th · ข้อมูลเพื่อการศึกษาเท่านั้น · For Educational Purposes Only</p>
-      <p>การปลดล็อคอุปกรณ์อาจผิดกฎหมายหรือละเมิดเงื่อนไข ISP กรุณาตรวจสอบก่อน</p>
+      <p>การปลดล็อคอุปกรณ์อาจผิดกฎหมายหรือละเมิดเงื่อนไข ISP กรุณาตรวจสอบก่อนดำเนินการ</p>
     </div>
   </div>
 </footer>
 
-<!-- MODAL -->
+<!-- Modal -->
 <div id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
   <div id="mbox">
     <button id="mclose" aria-label="ปิด"><i class="fa-solid fa-xmark"></i></button>
