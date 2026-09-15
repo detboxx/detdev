@@ -1,441 +1,340 @@
-/* app.js — WS Tech Router Lab */
+/* app.js v3.1 — WS Tech Router Lab (Fixed) */
 
 // ---- Navbar scroll ----
 window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 40);
+    const nb = document.getElementById('navbar');
+    if (nb) nb.classList.toggle('scrolled', window.scrollY > 40);
 });
 
 // ---- Mobile menu ----
 const mobileBtn = document.getElementById('mobileMenuBtn');
-const navLinks = document.getElementById('navLinks');
+const navLinks  = document.getElementById('navLinks');
 if (mobileBtn && navLinks) {
     mobileBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
-    document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+    document.querySelectorAll('.nav-link').forEach(l =>
+        l.addEventListener('click', () => navLinks.classList.remove('open'))
+    );
 }
 
-// ---- Filter buttons ----
+// ---- Filter ----
 document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function () {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        const filter = this.dataset.filter;
+        const f = this.dataset.filter;
         document.querySelectorAll('.router-card').forEach(card => {
-            if (filter === 'all') {
+            if (f === 'all') {
                 card.classList.remove('hidden');
-            } else if (filter === 'thai') {
+            } else if (f === 'thai') {
                 card.classList.toggle('hidden', !card.dataset.thai);
             } else {
-                card.classList.toggle('hidden', card.dataset.difficulty !== filter);
+                card.classList.toggle('hidden', card.dataset.difficulty !== f);
             }
         });
     });
 });
 
-// ---- Router Data (Modal content) ----
-const routerData = {
+// ---- Router Data ----
+const DB = {
     'xiaomi-ax3000t': {
-        brand: 'xiaomi',
-        brandName: 'Xiaomi',
-        icon: 'fa-solid fa-m',
-        title: 'Xiaomi AX3000T',
-        chip: 'MediaTek MT7981B · Wi-Fi 6 · AX3000',
-        difficulty: 'easy',
-        diffLabel: 'ง่าย / Easy',
-        risk: 'ต่ำ',
-        riskClass: 'low',
-        overview: `AX3000T เป็นหนึ่งในเราเตอร์ที่ง่ายที่สุดในการปลดล็อค เนื่องจาก Xiaomi ใช้ระบบ API ภายในที่ไม่ได้ป้องกัน authentication ครบถ้วน ทำให้สามารถเปิด SSH ได้โดยไม่ต้อง downgrade firmware หรือใช้อุปกรณ์พิเศษ<br><br>
-        <em>ข้อควรระวัง: ตรวจสอบว่าคุณมี RD03 ไม่ใช่ RD03v2 — version ใหม่นั้น chipset ต่างออกไปและ OpenWrt ยังไม่รองรับ</em>`,
-        steps: [
+        cls:'xiaomi', icon:'MI', title:'Xiaomi AX3000T', chip:'MediaTek MT7981B · Wi-Fi 6 · AX3000',
+        diff:'easy', diffLbl:'ง่าย / Easy', risk:'low', riskLbl:'ต่ำ',
+        overview:`AX3000T เป็นหนึ่งในเราเตอร์ที่ง่ายที่สุดในการปลดล็อค เนื่องจาก Xiaomi ใช้ระบบ API ภายในที่ไม่ได้ป้องกัน authentication ครบถ้วน ทำให้สามารถเปิด SSH ได้โดยไม่ต้อง downgrade firmware หรือใช้อุปกรณ์พิเศษ<br><br><em>⚠️ ตรวจสอบว่าคุณมี RD03 ไม่ใช่ RD03v2 — version ใหม่นั้น chipset ต่างออกไปและ OpenWrt ยังไม่รองรับ mainline</em>`,
+        steps:[
+            'ตรวจสอบ label ใต้เครื่อง: RD03 = MediaTek MT7981B (รองรับ), RD03v2 = Qualcomm IPQ5018 (แยก repo)',
             'ดาวน์โหลด xmir-patcher และ Python 3 ติดตั้งให้เรียบร้อย',
-            'เชื่อมต่อ LAN cable จาก PC ไปยังเราเตอร์, login ที่ 192.168.31.1 และอัปเดต firmware ให้เป็น version ล่าสุดจาก Xiaomi ก่อน',
-            'รัน script: python xmir-patcher.py เลือก "Enable SSH" จาก menu',
-            'SSH เข้า router: ssh root@192.168.31.1 (default pass: admin หรือ password ของ router)',
-            'หลังจาก SSH เข้าได้แล้ว ใช้ mtd write ในการ flash OpenWrt initramfs แล้วตามด้วย sysupgrade'
+            'รัน: python xmir-patcher.py เลือก "Enable SSH" จาก menu',
+            'SSH เข้า: ssh root@192.168.31.1 — ก่อน flash ให้รัน cat /proc/mtd เพื่อ backup partition',
+            'Flash custom U-Boot bootloader ก่อน แล้วตามด้วย OpenWrt sysupgrade image'
         ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> ก่อน flash OpenWrt ให้รัน <code>cat /proc/cmdline</code> เพื่อ verify hardware version ก่อน — หาก output มีคำว่า "rd03v2" ให้หยุดทันที เพราะนั่นคือ hardware ที่ยังไม่รองรับ`,
-        warning: '⚠️ อย่า flash firmware จาก YouTube หรือ blog ที่ไม่น่าเชื่อถือ ใช้ OpenWrt Firmware Selector เท่านั้น',
-        afterUnlock: ['AdGuard Home', 'WireGuard VPN', 'OpenWrt LuCI', 'EasyMesh', 'Bandwidth Monitor', 'Custom DNS'],
-        codeExample: 'ssh root@192.168.31.1\n# หลัง login:\ncat /proc/version\nmtd list'
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> รัน <code>cat /proc/mtd</code> หลัง SSH เข้าได้ เพื่อ backup ART partition — นั่นคือ Wi-Fi calibration data ถ้าหายไปโดยไม่มี backup, radio จะทำงานผิดปกติถาวร Xiaomi patch exploit นี้บ่อยมาก ถ้า firmware ใหม่กว่า 1.0.47 อาจต้อง downgrade ก่อน`,
+        warn:'⚠️ ห้ามใช้ firmware จาก YouTube หรือ blog ที่ไม่น่าเชื่อถือ ใช้ OpenWrt Firmware Selector เท่านั้น',
+        code:'ssh root@192.168.31.1\n# หลัง login:\ncat /proc/mtd        # ดู partition layout\ncat /proc/version    # ตรวจ kernel version',
+        after:['Full OpenWrt','AdGuard Home','WireGuard VPN','VLAN','Bandwidth Monitor','Entware']
     },
     'xiaomi-ax9000': {
-        brand: 'xiaomi',
-        brandName: 'Xiaomi',
-        icon: 'fa-solid fa-m',
-        title: 'Xiaomi AX9000',
-        chip: 'Qualcomm IPQ8072A Quad-Core · Wi-Fi 6 · Tri-band',
-        difficulty: 'medium',
-        diffLabel: 'ปานกลาง / Medium',
-        risk: 'กลาง',
-        riskClass: 'medium',
-        overview: `AX9000 ใช้ chipset Qualcomm ซึ่งมีการสนับสนุน OpenWrt แบบ partial เท่านั้น การเปิด SSH ทำได้ผ่าน MiWiFi backend API แต่ต้องระวังเรื่อง firmware version เพราะ Xiaomi ปิดช่องโหว่นี้ใน version ใหม่กว่า`,
-        steps: [
-            'ตรวจสอบ firmware version ปัจจุบัน — หากเกิน 3.0.xx อาจต้อง downgrade ก่อน',
-            'ใช้ MiWiFi repair exploit หรือ SSH enable บน stock ROM version เก่า',
-            'เข้า developer mode ผ่าน API: POST /api/misystem/set_sys_time',
-            'SSH เข้า router และติดตั้ง Entware สำหรับ package manager',
-            'หากต้องการ full OpenWrt: ต้องทำผ่าน UART เนื่องจาก bootloader ถูก lock'
+        cls:'xiaomi', icon:'MI', title:'Xiaomi AX9000', chip:'Qualcomm IPQ8072A Quad-Core · Wi-Fi 6 Tri-band',
+        diff:'medium', diffLbl:'ปานกลาง / Medium', risk:'medium', riskLbl:'กลาง',
+        overview:`AX9000 ใช้ chipset Qualcomm IPQ8072A ที่ทรงพลัง มี 2.5G gaming port และ tri-band radio OpenWrt รองรับ official ตั้งแต่ 23.05.x แต่ต้องระวัง: firmware version ใหม่กว่า 1.0.82 อาจต้อง downgrade ก่อนทำ exploit`,
+        steps:[
+            'ตรวจสอบ firmware version — ถ้าเกิน 1.0.82 ให้ downgrade ผ่าน Xiaomi อย่างเป็นทางการก่อน',
+            'ใช้ SN-based key generator tool จาก community เพื่อ generate unlock payload',
+            'Enable Telnet ผ่าน payload, เข้า Telnet แล้ว set SSH root password',
+            'Backup ทุก partition ก่อน flash โดยเฉพาะ ART — Qualcomm Wi-Fi calibration อยู่ใน nvmem nodes',
+            'Flash OpenWrt factory image แล้ว sysupgrade — device ใช้ A/B partition scheme'
         ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> AX9000 รัน Qualcomm NSS (Network Subsystem) ซึ่งให้ performance สูงมาก ถ้า flash OpenWrt แล้ว NSS offload จะหายไป — แนะนำให้ใช้ Entware บน stock ROM แทนถ้าต้องการ performance สูงสุด`,
-        warning: '⚠️ การ downgrade firmware มีความเสี่ยงปานกลาง ควรมี UART adapter สำรองไว้ก่อนทำ',
-        afterUnlock: ['Entware Package Manager', 'AdGuard', 'OpenVPN', 'Custom Firewall', 'QoS Tuning'],
-        codeExample: 'curl -X POST http://192.168.31.1/api/misystem/set_sys_time\n# Enable SSH via API exploit'
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> AX9000 รัน HOT มากบน OpenWrt เพราะ stock thermal management หายไป ทำอันดับแรกหลัง flash คือเช็ค CPU temp: <code>cat /sys/class/thermal/thermal_zone*/temp</code> แล้วพิจารณา set fan control script หรือปรับ airflow ก่อน`,
+        warn:'⚠️ International version มี secure boot ที่ยากกว่า Chinese version มาก ตรวจสอบ variant ก่อนเริ่ม',
+        code:'# หลัง SSH เข้าได้:\ncat /sys/class/thermal/thermal_zone*/temp\n# ตรวจ 2.5G port:\nip link show | grep -i eth',
+        after:['Full OpenWrt','4804Mbps Gaming Radio','WireGuard HW Offload','QoS/SQM','Entware','Custom DNS']
     },
     'xiaomi-be7000': {
-        brand: 'xiaomi',
-        brandName: 'Xiaomi',
-        icon: 'fa-solid fa-m',
-        title: 'Xiaomi BE7000',
-        chip: 'Qualcomm IPQ5332 · Wi-Fi 7 · BE7000',
-        difficulty: 'hard',
-        diffLabel: 'ยาก / Hard',
-        risk: 'สูง',
-        riskClass: 'high',
-        overview: `BE7000 เป็น Wi-Fi 7 รุ่นใหม่ของ Xiaomi ที่ยังอยู่ในช่วง early exploration สำหรับ OpenWrt/custom firmware ต้องใช้ UART serial หรือ FTP exploit ที่พบในบาง firmware version เท่านั้น`,
-        steps: [
-            'เปิดเครื่องและหา UART pads บน PCB (ต้องถอด case)',
-            'ต่อสาย UART ด้วย CH340/FTDI adapter (baud: 115200)',
-            'Boot เข้า U-Boot และ interrupt boot sequence',
-            'ใช้ tftp เพื่อ load test firmware หรือ modify boot args',
-            'สำหรับ method ไม่ต้องถอดเครื่อง: รอ community exploit บน firmware เก่า'
+        cls:'xiaomi', icon:'MI', title:'Xiaomi BE7000 (Wi-Fi 7)', chip:'Qualcomm IPQ9574 · Wi-Fi 7 · BE7000',
+        diff:'hard', diffLbl:'ยาก / Hard', risk:'high', riskLbl:'สูง',
+        overview:`BE7000 เป็น Wi-Fi 7 รุ่นใหม่ที่ยังอยู่ใน early exploration OpenWrt mainline ยังไม่รองรับ IPQ9574 แต่ stock firmware รองรับ Docker ซึ่งเป็น workaround ที่ดีที่สุดในตอนนี้`,
+        steps:[
+            'ใช้ xmir-patcher เพื่อ enable SSH ชั่วคราวบน stock firmware',
+            'SSH นี้ไม่ persistent — ต้องรัน exploit ใหม่ทุกครั้งหลัง reboot',
+            'ห้าม flash OpenWrt IPQ9574 images จาก GitHub fork ที่ไม่มี community รับรอง',
+            'วิธีที่ดีที่สุด: รัน Docker container บน stock firmware (AdGuard, WireGuard)',
+            'ติดตาม OpenWrt forum thread สำหรับ IPQ95xx — รอ mainline support'
         ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> ณ ปัจจุบัน BE7000 ที่ง่ายที่สุดคือการใช้ FTP service ที่เปิดอยู่โดย default ใน firmware < 1.0.30 เพื่อ upload modified config file แล้วเปิด Telnet`,
-        warning: '⚠️ Wi-Fi 7 hardware support ใน Linux kernel ยังไม่สมบูรณ์ — ระวัง radio อาจทำงานได้แค่บางส่วน',
-        afterUnlock: ['SSH access', 'Custom firewall rules', 'Basic monitoring'],
-        codeExample: '# UART connection\nscreen /dev/ttyUSB0 115200\n# Interrupt U-Boot:\nPress any key to stop autoboot...'
-    },
-    'tplink-ax50': {
-        brand: 'tplink',
-        brandName: 'TP-Link',
-        icon: 'fa-solid fa-t',
-        title: 'TP-Link Archer AX50',
-        chip: 'Broadcom BCM6750 · Wi-Fi 6 · AX3000 Dual-band',
-        difficulty: 'easy',
-        diffLabel: 'ง่าย / Easy',
-        risk: 'ต่ำ',
-        riskClass: 'low',
-        overview: `Archer AX50 เป็น target ที่ดีมากสำหรับ OpenWrt เพราะ Broadcom BCM6750 มี driver ที่ค่อนข้างสมบูรณ์ การ flash ทำได้ผ่าน web interface โดยตรง — ไม่ต้องใช้อุปกรณ์พิเศษ`,
-        steps: [
-            'ตรวจ hardware version: พลิกดูข้างล่างเครื่อง ต้องเป็น v1 (v2 ขึ้นไปอาจต่างกัน)',
-            'ดาวน์โหลด OpenWrt factory image สำหรับ AX50 จาก firmware-selector.openwrt.org',
-            'เข้าหน้า admin panel → Advanced → System Tools → Firmware Upgrade',
-            'Upload OpenWrt factory image, รอ reboot ประมาณ 3 นาที',
-            'เข้า LuCI ที่ 192.168.1.1 ตั้ง password และ configure'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> ถ้าเกิด brick ให้ใช้ TFTP recovery: กด reset ค้างไว้ขณะ power on แล้วส่ง recovery image ผ่าน TFTP ที่ IP 192.168.0.1`,
-        warning: '⚠️ ตรวจ hardware version ก่อนทุกครั้ง — v2/v3 อาจมี chipset ต่างออกไป',
-        afterUnlock: ['LuCI Web UI', 'OpenVPN/WireGuard', 'AdGuard Home', 'VLAN', 'QoS', 'Bandwidth Control'],
-        codeExample: '# TFTP Recovery (ถ้า brick)\ntftp 192.168.0.1\n> binary\n> put ArcherAX50_recovery.bin'
-    },
-    'tplink-ax73': {
-        brand: 'tplink',
-        brandName: 'TP-Link',
-        icon: 'fa-solid fa-t',
-        title: 'TP-Link Archer AX73',
-        chip: 'MediaTek MT7621A + MT7905/7975 · Wi-Fi 6',
-        difficulty: 'easy',
-        diffLabel: 'ง่าย / Easy',
-        risk: 'ต่ำ',
-        riskClass: 'low',
-        overview: `AX73 ใช้ MediaTek ซึ่ง OpenWrt รองรับได้ดีมาก การปลดล็อคทำได้ง่ายผ่าน web interface เช่นเดียวกับ AX50 แต่มีข้อดีคือ MT chipset ให้ Wi-Fi performance ที่ดีกว่าบน OpenWrt เพราะ opensource driver สมบูรณ์กว่า Broadcom`,
-        steps: [
-            'เข้า admin panel → Advanced → System Tools → Firmware',
-            'Download OpenWrt สำหรับ Archer AX73 (ระวัง version ด้วย)',
-            'Upload factory image ผ่าน web interface',
-            'รอ reboot และเข้า LuCI ที่ 192.168.1.1'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> MediaTek driver ใน OpenWrt รองรับ 160MHz channel width ได้เต็มๆ ทำให้ได้ throughput จริงสูงกว่า stock firmware มาก`,
-        warning: '⚠️ ตรวจสอบ hardware revision อย่างละเอียด AX73 v1 และ v2 ใช้ image คนละตัวกัน',
-        afterUnlock: ['Full OpenWrt', 'WireGuard', 'AdGuard', 'SQM QoS', 'VLAN isolation'],
-        codeExample: '# หลัง flash OpenWrt\nssh root@192.168.1.1\nopkg update && opkg install luci-app-adblock'
-    },
-    'zte-f6600': {
-        brand: 'zte',
-        brandName: 'ZTE',
-        icon: 'ZTE',
-        title: 'ZTE F6600 (NT/TOT GPON)',
-        chip: 'Qualcomm IPQ4019 · GPON ONU · ISP Locked',
-        difficulty: 'hard',
-        diffLabel: 'ยาก / Hard',
-        risk: 'สูง',
-        riskClass: 'high',
-        overview: `ZTE F6600 เป็น GPON ONU ที่ ISP ไทย (NT, TOT) แจกให้ลูกค้า fiber ทั่วไป router นี้มีระบบ config encryption ด้วย AES-128 ที่ ZTE ออกแบบเอง และมี Telnet service ซ่อนอยู่ที่สามารถ enable ได้ด้วย trick พิเศษ<br><br>
-        <em>ข้อมูลนี้มาจากการ reverse engineer โดยตรง ไม่มีในเอกสาร official</em>`,
-        steps: [
-            'เข้าหน้า admin web UI ที่ 192.168.1.1 ด้วย super admin credential (ไม่ใช่ password ปกติ)',
-            'Download config backup (.bin) จาก diagnostic page',
-            'Decrypt config ด้วย AES-128 key ที่คำนวณจาก model+serial number',
-            'แก้ไข config เพื่อเปิด Telnet service และ debug mode',
-            'Re-encrypt และ upload กลับ จากนั้น reboot เพื่อ apply'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> ZTE ใช้ AES-128-ECB สำหรับ config encryption โดย key ถูก derive มาจาก string "ZXHN" + เลข model + serial number บางส่วน — นี่คือ discovery ที่ทีม WS ค้นพบจากการ reverse ไม่มีในเอกสาร ZTE official`,
-        warning: '⚠️ การแก้ไข GPON ONU อาจขัดต่อเงื่อนไขการใช้งานของ ISP ทำด้วยความระวังและความรับผิดชอบของตัวเอง',
-        afterUnlock: ['Telnet Shell', 'Custom DNS', 'Port Forwarding unlock', 'VLAN config', 'TR-069 disable'],
-        codeExample: '# หลัง decrypt config\ntelnet 192.168.1.1\n# login ด้วย super user credential\n$ cat /etc/passwd'
-    },
-    'zte-f6107': {
-        brand: 'zte',
-        brandName: 'ZTE',
-        icon: 'ZTE',
-        title: 'ZTE F6107',
-        chip: 'MediaTek MT7628 · EPON/GPON · ISP Locked',
-        difficulty: 'hard',
-        diffLabel: 'ยาก / Hard',
-        risk: 'สูง',
-        riskClass: 'high',
-        overview: `F6107 เป็นรุ่นพี่เก่ากว่า F6600 ใช้ MediaTek MT7628 และมี UART pad ที่หา pin ได้ค่อนข้างง่ายกว่า ISP บางรายยังใช้รุ่นนี้อยู่ในพื้นที่ห่างไกล`,
-        steps: [
-            'ถอด case และหา UART pad บน PCB (TX, RX, GND)',
-            'ต่อ UART adapter (3.3V) baud rate 115200',
-            'Boot เข้า shell ผ่าน serial console',
-            'แก้ไข /etc/config/firewall เพื่อเปิด Telnet port',
-            'หรือใช้ config backup method เช่นเดียวกับ F6600'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> F6107 บางล็อตมี default credentials ที่ยัง default อยู่ใน Telnet: username "root" password "Zte521" — ลองดูก่อน UART เสมอ`,
-        warning: '⚠️ UART ต้องใช้ 3.3V logic เท่านั้น ห้ามใช้ 5V TTL เพราะจะเผา chip',
-        afterUnlock: ['UART Shell', 'Custom firewall', 'DNS override', 'Port forward full access'],
-        codeExample: '# UART login\nscreen /dev/ttyUSB0 115200\n\nlogin: root\nPassword: Zte521'
-    },
-    'asus-rtax88u': {
-        brand: 'asus',
-        brandName: 'ASUS',
-        icon: 'ASUS',
-        title: 'ASUS RT-AX88U',
-        chip: 'Broadcom BCM4908 Quad-Core · Wi-Fi 6 · AX6000',
-        difficulty: 'easy',
-        diffLabel: 'ง่ายมาก / Very Easy',
-        risk: 'ต่ำมาก',
-        riskClass: 'low',
-        overview: `RT-AX88U เป็นหนึ่งในเราเตอร์ที่ "hacker-friendly" ที่สุดในตลาด เพราะ ASUS เปิด SSH ให้ใช้ได้จากใน web UI โดยตรง และ Merlin firmware ก็รองรับเต็มที่ — เกือบไม่มีความเสี่ยง`,
-        steps: [
-            'เข้า admin panel → Administration → System → Enable SSH',
-            'Set SSH port (แนะนำเปลี่ยนจาก 22 เป็น port อื่น)',
-            'Flash Asuswrt-Merlin จาก merlin.ng เพื่อ unlock features เพิ่มเติม',
-            'SSH เข้า router และติดตั้ง Entware สำหรับ package manager',
-            'ติดตั้ง AdGuard Home, WireGuard, หรือ custom scripts'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> Asuswrt-Merlin บน AX88U รองรับ Adaptive QoS + AIMESH ได้พร้อมกัน ซึ่ง stock OpenWrt ยังทำไม่ได้ เพราะ Broadcom NSS ไม่มี open source driver เต็มรูปแบบ`,
-        warning: '⚠️ Merlin ยังใช้ Broadcom closed-source driver ดังนั้น OpenWrt จะให้ Wi-Fi performance ต่ำกว่ามาก',
-        afterUnlock: ['Entware', 'AdGuard Home', 'WireGuard VPN', 'Custom Scripts', 'JFFS Scripts', 'AiMesh', 'USB Storage'],
-        codeExample: 'ssh admin@192.168.1.1\n# ติดตั้ง Entware:\ncurl -fsL --retry 3 "https://bin.entware.net/armv7sf-k3.10/installer/generic.sh" | /bin/sh'
-    },
-    'asus-tufax4200': {
-        brand: 'asus',
-        brandName: 'ASUS',
-        icon: 'ASUS',
-        title: 'ASUS TUF-AX4200',
-        chip: 'MediaTek MT7986A (Filogic 830) · Wi-Fi 6 · AX4200',
-        difficulty: 'medium',
-        diffLabel: 'ปานกลาง / Medium',
-        risk: 'ต่ำ',
-        riskClass: 'low',
-        overview: `TUF-AX4200 ใช้ MediaTek Filogic 830 ซึ่ง OpenWrt รองรับได้ดีมาก และเป็นหนึ่งใน router ที่ give best OpenWrt experience เพราะ MT open-source driver สมบูรณ์ที่สุด`,
-        steps: [
-            'Enable SSH ผ่าน ASUS web UI → Administration',
-            'Download OpenWrt สำหรับ TUF-AX4200 จาก openwrt.org',
-            'Flash ผ่าน web UI หรือ SSH + mtd write',
-            'Reboot และเข้า LuCI ที่ 192.168.1.1',
-            'ตั้งค่า Wi-Fi และ configure ตามต้องการ'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> Filogic 830 รองรับ hardware offload ใน OpenWrt ทำให้ได้ throughput ใกล้เคียง wire speed แม้เปิด NAT — นี่คือจุดเด่นที่ทำให้ดีกว่า Broadcom-based รุ่นอื่น`,
-        warning: '⚠️ บาง factory firmware version ต้องการ intermediate step ก่อน flash OpenWrt ตรวจสอบ OpenWrt wiki ก่อน',
-        afterUnlock: ['Full OpenWrt', 'HW Offload', 'WireGuard', 'AdGuard', 'VLAN', 'EasyMesh'],
-        codeExample: 'ssh admin@192.168.1.1\nmtd write /tmp/openwrt-factory.bin firmware'
-    },
-    'huawei-ax3': {
-        brand: 'huawei',
-        brandName: 'Huawei',
-        icon: 'fa-solid fa-h',
-        title: 'Huawei AX3 / Honor Router 3',
-        chip: 'HiSilicon Kirin 659 · Wi-Fi 6 · AX3000',
-        difficulty: 'hard',
-        diffLabel: 'ยาก / Hard',
-        risk: 'สูง',
-        riskClass: 'high',
-        overview: `Huawei และ Honor router ใช้ HiSilicon chipset ของตัวเอง ซึ่ง OpenWrt ไม่รองรับ การปลดล็อคหมายถึงการ enable Telnet ที่ซ่อนอยู่ ผ่าน payload ใน URL ของ web admin`,
-        steps: [
-            'Login เข้า web UI ที่ 192.168.3.1',
-            'ส่ง HTTP request พิเศษ เพื่อ enable Telnet service (exploit ใน firmware เก่า)',
-            'Telnet เข้า 192.168.3.1 port 23',
-            'login ด้วย super user credential ที่ derived จาก S/N',
-            'แก้ไข config ตามต้องการผ่าน CLI'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> Huawei router มี "diagnostic mode" ที่เปิดได้ด้วย URL: /api/nms/cmd?module=admin พร้อม payload ที่ถูกต้อง credential ถูก generate จาก IMEI+MAC แบบ custom algorithm`,
-        warning: '⚠️ ไม่มี OpenWrt support — สามารถแก้ไข stock firmware เท่านั้น และ Telnet exploit ถูกปิดใน firmware ใหม่',
-        afterUnlock: ['Telnet CLI', 'Custom DNS', 'Firewall rules', 'QoS manual config'],
-        codeExample: 'telnet 192.168.3.1\nlogin: telecomadmin\nPassword: <derived from S/N>'
-    },
-    'glinet-mt3000': {
-        brand: 'glinet',
-        brandName: 'GL.iNet',
-        icon: 'GL',
-        title: 'GL.iNet MT3000 Beryl AX',
-        chip: 'MediaTek MT7981B · Wi-Fi 6 · AX3000',
-        difficulty: 'easy',
-        diffLabel: 'ง่ายมาก / Beginner-Friendly',
-        risk: 'ต่ำมาก',
-        riskClass: 'low',
-        overview: `GL.iNet Beryl AX คือ "OpenWrt by default" — router ตัวนี้รัน OpenWrt modified มาแต่แรกและเปิด SSH ให้ใช้ได้เลยโดย default เหมาะสำหรับคนที่เริ่มต้นเรียนรู้ router modding ที่สุด`,
-        steps: [
-            'เปิดเครื่องและเข้า web UI ที่ 192.168.8.1',
-            'ตั้ง admin password และ enable SSH จาก settings',
-            'SSH เข้า: ssh root@192.168.8.1',
-            'ใช้ opkg install เพื่อติดตั้ง package ต่างๆ',
-            'สามารถ flash standard OpenWrt เพื่อ unlock LuCI full features'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> GL.iNet ใช้ GL-SDK ซึ่ง based on OpenWrt แต่มี GL UI overlay สามารถ flash OpenWrt "vanilla" เพื่อ remove GL layer และได้ LuCI เต็มๆ — ผลลัพธ์คือ travel router ที่ทรงพลังมาก`,
-        warning: '⚠️ ถ้า flash OpenWrt vanilla จะไม่มี GL interface แล้ว — ต้องใช้ LuCI เท่านั้น',
-        afterUnlock: ['Full OpenWrt/LuCI', 'WireGuard', 'OpenVPN', 'AdGuard', 'Tor routing', 'USB Tethering'],
-        codeExample: 'ssh root@192.168.8.1\nopkg update\nopkg install adguardhome wireguard-tools'
-    },
-    'netgear-rax50': {
-        brand: 'netgear',
-        brandName: 'Netgear',
-        icon: 'fa-solid fa-n',
-        title: 'Netgear Nighthawk RAX50',
-        chip: 'Broadcom BCM6750 · Wi-Fi 6 · AX5400',
-        difficulty: 'medium',
-        diffLabel: 'ปานกลาง / Medium',
-        risk: 'กลาง',
-        riskClass: 'medium',
-        overview: `Nighthawk RAX50 ใช้ chipset เดียวกับ TP-Link AX50 แต่ Netgear ล็อค bootloader แน่นกว่า DD-WRT มี support แบบ partial และ OpenWrt ยังอยู่ในช่วง testing`,
-        steps: [
-            'Enable Telnet ผ่าน Netgear debug URL: http://192.168.1.1/debug.htm',
-            'Telnet เข้าและ check filesystem layout',
-            'สำหรับ DD-WRT: ใช้ web flash ผ่าน Netgear admin UI',
-            'สำหรับ OpenWrt: ต้องมี TFTP recovery method เตรียมไว้ก่อน'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> Netgear มี hidden debug page ที่ /debug.htm ซึ่งเปิดให้ enable Telnet และดู system info ลึกมาก — ลองเข้าดูก่อน flash ทุกครั้ง`,
-        warning: '⚠️ Netgear Armor (Bitdefender) จะหยุดทำงานหลัง flash custom firmware',
-        afterUnlock: ['DD-WRT', 'Telnet CLI', 'Custom Firewall', 'VPN Client'],
-        codeExample: 'telnet 192.168.1.1\n# หลัง enable จาก debug.htm\nbusybox ash'
-    },
-    'thai-isp-oem': {
-        brand: 'isp',
-        brandName: 'Thai ISP OEM',
-        icon: 'ISP',
-        title: 'TOT / NT / AIS OEM Routers',
-        chip: 'ZTE / Huawei / Nokia OEM · GPON/EPON',
-        difficulty: 'hard',
-        diffLabel: 'ยาก / Expert',
-        risk: 'สูงมาก',
-        riskClass: 'high',
-        overview: `เราเตอร์ OEM ที่ ISP ไทยแจกให้ลูกค้า มักเป็น ZTE, Huawei หรือ Nokia ที่ถูก rebrand และ lock config ด้วย ISP profile ปิด Telnet, TR-069 เข้ามาจาก ISP และ admin credential ถูกเปลี่ยน<br><br>
-        <em>ทีม WS มีประสบการณ์ตรงกับ ZTE F6600 (NT), ZTE T3 (AIS), และ Huawei HG8145V5 (TRUE)</em>`,
-        steps: [
-            'ตรวจสอบ model จากสติกเกอร์: ZTE, Huawei, Nokia, Sercomm หรือ Fiberhome',
-            'ลอง default credential ของ ISP: admin/admin, user/user, telecomadmin/admintelecom',
-            'ถ้า login ได้: ลอง URL exploit เพื่อ enable Telnet หรือ SSH',
-            'ถ้าไม่ได้: download config backup และ decrypt AES',
-            'UART เป็น last resort: เปิดเครื่องและ connect serial ก่อน boot'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> NT F6600 ใช้ super-admin credential ที่ derive มาจาก MAC address บางส่วน — algorithm คือ base64(md5(mac[:6] + "ZXHN")) ซึ่งทีม WS reverse ออกมาได้จากการ dump firmware`,
-        warning: '⚠️ การแก้ไข ONU ของ ISP อาจผิดกฎหมายหรือสัญญาให้บริการ ควรทำบน device ที่เป็นของตัวเองที่ซื้อมาเท่านั้น ไม่ใช่ device ที่ ISP ยังเป็นเจ้าของ',
-        afterUnlock: ['TR-069 disable', 'Custom DNS', 'Port forwarding full', 'VLAN config', 'QoS override', 'DMZ'],
-        codeExample: '# NT F6600 super admin\nUSERNAME: telecomadmin\nPASSWORD: <derived from MAC>\n\n# หรือ Telnet:\ntelnet 192.168.1.1 23'
-    },
-    'mikrotik-hap': {
-        brand: 'mikrotik',
-        brandName: 'MikroTik',
-        icon: 'MT',
-        title: 'MikroTik hAP ax3',
-        chip: 'Qualcomm IPQ-6010 · Wi-Fi 6 · RouterOS 7',
-        difficulty: 'easy',
-        diffLabel: 'ง่าย / Professional',
-        risk: 'ต่ำมาก',
-        riskClass: 'low',
-        overview: `MikroTik เป็น "open by design" — RouterOS ให้ control เต็มที่ผ่าน Winbox, SSH, API ตั้งแต่ box ไม่ต้อง "ปลดล็อค" แต่การ "unlock" คือการเรียนรู้ RouterOS ให้ถึงขีดสุด และสามารถ install container packages รวมถึง AdGuard, WireGuard ได้เลย`,
-        steps: [
-            'เปิดเครื่อง เชื่อมต่อ ether1 และเข้าผ่าน Winbox (download จาก mikrotik.com)',
-            'Login: admin / password ว่าง (default)',
-            'ตั้ง password ทันที และ update RouterOS: /system package update install',
-            'Enable SSH: /ip service enable ssh',
-            'ติดตั้ง Container package และรัน AdGuard Home / WireGuard ใน container'
-        ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> RouterOS Container support ช่วยให้รัน Docker image บน router ได้เลย — ทำให้ hAP ax3 กลายเป็น all-in-one: Router + VPN server + AdBlock + monitoring ในกล่องเดียว`,
-        warning: '⚠️ RouterOS license ต้องการ activation หลัง 24 ชม. แต่ hAP ax3 มี license ฝังมาในตัว',
-        afterUnlock: ['RouterOS Full', 'Container/Docker', 'AdGuard', 'WireGuard', 'BGP/OSPF routing', 'Bandwidth queue', 'Hotspot'],
-        codeExample: '/system package update install\n/ip service enable ssh\n/container add remote-image=adguard/adguardhome'
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> BE7000 stock firmware รองรับ Docker containers ซึ่งหมายความว่าคุณรัน AdGuard Home, Pi-hole หรือแม้แต่ WireGuard inside container ได้เลยโดยไม่ต้องแตะ base system — นี่คือ best power-user move ขณะรอ OpenWrt mainline`,
+        warn:'⚠️ Wi-Fi 7 kernel driver ecosystem ยังไม่ open-source พร้อม การ flash จะสูญเสีย Wi-Fi หรือ brick อุปกรณ์ได้',
+        code:'# Docker บน stock firmware:\ndocker pull adguard/adguardhome\ndocker run -d --name adguard adguard/adguardhome',
+        after:['Docker on Stock (AdGuard, WireGuard)','SSH Exploration','Future: Full OpenWrt (TBD)']
     },
     'redmi-ax6000': {
-        brand: 'xiaomi',
-        brandName: 'Redmi (Xiaomi)',
-        icon: 'fa-solid fa-m',
-        title: 'Redmi AX6000',
-        chip: 'MediaTek MT7986A (Filogic 830) · Wi-Fi 6 · AX6000',
-        difficulty: 'medium',
-        diffLabel: 'ปานกลาง / Medium',
-        risk: 'กลาง',
-        riskClass: 'medium',
-        overview: `Redmi AX6000 ใช้ Filogic 830 เช่นเดียวกับ ASUS TUF-AX4200 ทำให้ OpenWrt performance ดีเยี่ยม วิธีการ unlock SSH ใช้ API exploit บน stock firmware ซึ่ง community พัฒนา tool ไว้ให้แล้ว`,
-        steps: [
-            'ดาวน์โหลด tool จาก community (xiaomi-ax6000-exploit)',
-            'รัน script บน Windows/Linux: python exploit.py -t 192.168.31.1',
-            'Script จะ enable SSH อัตโนมัติผ่าน API chain exploit',
+        cls:'xiaomi', icon:'MI', title:'Redmi AX6000', chip:'MediaTek MT7986A (Filogic 830) · Wi-Fi 6 · AX6000',
+        diff:'medium', diffLbl:'ปานกลาง / Medium', risk:'medium', riskLbl:'กลาง',
+        overview:`Redmi AX6000 ใช้ Filogic 830 เช่นเดียวกับ ASUS TUF-AX4200 ทำให้ OpenWrt performance ดีเยี่ยม community พัฒนา SSH exploit tool ไว้ให้แล้ว และ hardware NAT offload ให้ throughput สูงมาก`,
+        steps:[
+            'ดาวน์โหลด exploit tool จาก community (xiaomi-ax6000-exploit บน GitHub)',
+            'รัน: python exploit.py -t 192.168.31.1 — script จะ enable SSH อัตโนมัติ',
             'SSH เข้า: ssh -oHostKeyAlgorithms=+ssh-rsa root@192.168.31.1',
-            'Flash OpenWrt ImmortalWrt สำหรับ Filogic 830 target'
+            'Backup ART partition ก่อน flash: dd if=/dev/mtd จาก cat /proc/mtd',
+            'Flash ImmortalWrt หรือ OpenWrt สำหรับ Filogic 830 target'
         ],
-        tip: `💡 <strong>เทคนิคพิเศษจาก WS:</strong> AX6000 + ImmortalWrt + HW offload = throughput > 2.5 Gbps NAT จริงที่วัดได้ ดีกว่า stock firmware มาก ถ้าเน้นความเร็วอย่างเดียวรุ่นนี้คุ้มที่สุด`,
-        warning: '⚠️ Exploit ใช้ได้กับ firmware version ที่จำกัด ต้องตรวจสอบ compatibility ก่อน',
-        afterUnlock: ['ImmortalWrt', 'HW Offload 2.5G+', 'AdGuard', 'WireGuard', 'Breed Bootloader'],
-        codeExample: 'python exploit.py -t 192.168.31.1\n# รอ SSH enable\nssh -oHostKeyAlgorithms=+ssh-rsa root@192.168.31.1'
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> AX6000 + ImmortalWrt + HW offload = throughput จริงมากกว่า 2 Gbps NAT — ดีกว่า stock firmware มาก สำหรับสาย performance รุ่นนี้คุ้มที่สุดในราคาระดับเดียวกัน Breed bootloader ช่วยให้ recover ง่ายมากถ้าเกิด brick`,
+        warn:'⚠️ Exploit ใช้ได้กับ firmware version ที่จำกัด ตรวจสอบ compatibility ของ firmware version กับ exploit tool ก่อน',
+        code:'python exploit.py -t 192.168.31.1\n# หลัง SSH enable:\nssh -oHostKeyAlgorithms=+ssh-rsa root@192.168.31.1',
+        after:['ImmortalWrt / OpenWrt','HW Offload 2Gbps+','AdGuard Home','WireGuard','Breed Bootloader']
+    },
+    'asus-rtax88u': {
+        cls:'asus', icon:'ASUS', title:'ASUS RT-AX88U', chip:'Broadcom BCM4908 Quad-Core · Wi-Fi 6 · AX6000',
+        diff:'easy', diffLbl:'ง่ายมาก / Very Easy', risk:'low', riskLbl:'ต่ำมาก',
+        overview:`RT-AX88U เป็นหนึ่งใน "hacker-friendly" router ที่ดีที่สุดในตลาด เพราะ ASUS เปิด SSH ให้ใช้ได้โดยตรงจาก web UI และ Asuswrt-Merlin firmware เพิ่ม features มากมายโดยไม่เสีย Wi-Fi performance`,
+        steps:[
+            'เข้า admin panel → Administration → System → Enable SSH → LAN Only → Apply',
+            'SSH เข้า: ssh admin@192.168.1.1 ด้วย router admin password',
+            'Flash Asuswrt-Merlin: ดาวน์โหลดจาก asuswrt-merlin.net, upload ผ่าน Firmware Update',
+            'หลัง Merlin: ใช้ amtm (ASUS Merlin Terminal Menu) ติดตั้ง Entware',
+            'ติดตั้ง AdGuard Home, WireGuard หรือ script ต่างๆ ผ่าน Entware'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> RT-AX88U กับ Asuswrt-Merlin + Entware คือ sweet spot ที่ดีที่สุดสำหรับคนที่ต้องการ features ขั้นสูงโดยไม่ต้องเรียนรู้ OpenWrt — amtm script จัดการ Entware, AdGuard, FlexQoS และ script ต่างๆ ผ่าน interactive menu ง่ายมาก`,
+        warn:'⚠️ OpenWrt ไม่รองรับ Broadcom BCM4908 Wi-Fi — Merlin คือทางเลือกที่ถูกต้องและดีที่สุดสำหรับรุ่นนี้',
+        code:'ssh admin@192.168.1.1\n# ติดตั้ง Entware:\ncurl -fsL --retry 3 "https://bin.entware.net/armv7sf-k3.10/installer/generic.sh" | /bin/sh',
+        after:['Asuswrt-Merlin','Entware','AdGuard Home','WireGuard via Merlin','FlexQoS','JFFS Scripts','AiMesh']
+    },
+    'asus-tufax4200': {
+        cls:'asus', icon:'ASUS', title:'ASUS TUF-AX4200', chip:'MediaTek MT7986A (Filogic 830) · Wi-Fi 6 · AX4200',
+        diff:'easy', diffLbl:'ง่าย / Easy', risk:'low', riskLbl:'ต่ำ',
+        overview:`TUF-AX4200 ใช้ MediaTek Filogic 830 ซึ่ง OpenWrt รองรับ official ตั้งแต่ 23.05.x และ hardware NAT offload ทำงานได้ดีมาก ทำให้ได้ throughput ใกล้ wire speed UART test pads รับ pogo pin ได้โดยไม่ต้องบัดกรี`,
+        steps:[
+            'Enable SSH ก่อน: Administration → System → Enable SSH → LAN Only',
+            'ดาวน์โหลด OpenWrt factory .trx image สำหรับ TUF-AX4200 จาก firmware-selector.openwrt.org',
+            'Upload ผ่าน ASUS web UI Firmware Update page (หรือ SSH + fw_setenv)',
+            'หลัง reboot: SSH เข้า root@192.168.1.1 ตั้ง password ทันที',
+            'ถ้า brick: UART pads บน PCB รับ pogo pin — ใช้ TFTP recovery ผ่าน browser'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> TUF-AX4200 มี UART test pads ที่รับ pogo pin โดยไม่ต้องบัดกรี — ทีม WS ทำ jig จาก 3D-printed bracket ไว้สำรองตลอด ทำให้ recovery จาก brick ทำได้ใน 5 นาที ไม่ต้องกังวลเรื่องทำพัง`,
+        warn:'⚠️ ตรวจสอบ OpenWrt wiki สำหรับ TUF-AX4200 ก่อน flash — version 24.10.0 มี boot issue บางตัว ใช้ 24.10.1+ ขึ้นไป',
+        code:'# Flash via SSH:\nssh admin@192.168.1.1\nmtd write /tmp/openwrt-factory.trx firmware\n\n# TFTP Recovery:\ntftp 192.168.1.1',
+        after:['Full OpenWrt','HW NAT Offload','WireGuard','AdGuard Home','2.5G WAN','VLAN 802.1Q','SQM QoS']
+    },
+    'zte-f6600': {
+        cls:'zte', icon:'ZTE', title:'ZTE F6600 (NT/AIS GPON)', chip:'ZTE Proprietary SoC · GPON ONU · ISP-Locked',
+        diff:'hard', diffLbl:'ยาก / Expert', risk:'high', riskLbl:'สูง',
+        overview:`ZTE F6600 เป็น GPON ONU ที่ ISP ไทย (NT, AIS) แจกให้ลูกค้า fiber อุปกรณ์นี้ถูก register MAC/SN กับ OLT ของ ISP ดังนั้นการ flash firmware ใหม่จะทำให้ internet ดับทันที<br><br><em>ข้อมูลนี้มาจากการ reverse engineer โดยตรงโดยทีม WS — ไม่มีใน official ZTE documentation</em>`,
+        steps:[
+            'ห้าม flash custom firmware เด็ดขาด — ISP register MAC/SN กับ OLT ถ้า firmware ผิด = internet ดับ',
+            'ดาวน์โหลด config backup (.bin) จาก diagnostic page ของ web UI',
+            'ใช้ zte-config-utility (GitHub) decrypt config.bin เพื่อดึง PPPoE credential',
+            'วิธีที่ดีที่สุดและปลอดภัยที่สุด: โทรขอ Bridge Mode จาก ISP (AIS: 1175, NT: 1888)',
+            'หลัง Bridge Mode: ต่อ router ของตัวเองเข้ากับ ONT แล้วใส่ PPPoE credential'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> ZTE ใช้ AES-128-ECB สำหรับ config encryption โดย key derive จาก "ZXHN" + model + serial number บางส่วน — นี่คือ discovery จากการ reverse ของทีม WS ใช้ zte-config-utility ซึ่ง implement algorithm นี้แล้ว`,
+        warn:'⚠️ การแก้ไข GPON ONU อาจขัดเงื่อนไข ISP และถ้า firmware ผิดจะสูญเสีย internet ทั้งบ้าน ทำด้วยความระวัง',
+        code:'# ใช้ zte-config-utility:\ngit clone https://github.com/... zte-config-utility\npython zte_config.py decrypt config.bin\n\n# ดู PPPoE credential ใน output',
+        after:['Bridge Mode (แนะนำ)','PPPoE Credential Extraction','Custom DNS บน stock','TR-069 research']
+    },
+    'zte-f6107': {
+        cls:'zte', icon:'ZTE', title:'ZTE F6107A (NT/TOT GPON)', chip:'MediaTek MT7628 · EPON/GPON · ISP-Locked',
+        diff:'hard', diffLbl:'ยาก / Hard', risk:'high', riskLbl:'สูง',
+        overview:`F6107A เป็นรุ่นเก่ากว่า F6600 ที่ NT/TOT ใช้ มี UART pad ที่หาค่อนข้างง่ายกว่า firmware บาง version เปิด Telnet ไว้โดย default ด้วย credential ที่ยังเป็น default`,
+        steps:[
+            'ลอง Telnet ก่อน: telnet 192.168.1.1 — credential: root/Zte521 หรือ admin/admin',
+            'ตรวจสอบ port 23 เปิดหรือไม่: nmap -p 23 192.168.1.1',
+            'ถ้า Telnet ไม่ได้: ใช้ zte-config-utility decrypt config backup',
+            'UART path: ถอด case หา TX/RX/GND pad (3.3V ห้ามใช้ 5V), baud 115200',
+            'ขอ Bridge Mode จาก NT (1888) — วิธีปลอดภัยและง่ายที่สุด'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> F6107A บาง lot มี default Telnet credential: username "root" password "Zte521" ลองก่อนเสมอ — ถ้าเข้าได้จะได้ busybox shell แบบ restricted แต่อ่าน /etc config ได้ Pantip.com มีข้อมูล Thai community สำหรับรุ่นนี้เยอะมาก`,
+        warn:'⚠️ UART ต้องใช้ 3.3V logic เท่านั้น — ห้ามใช้ 5V TTL เพราะจะเผา GPIO ของ SoC',
+        code:'# ลอง Telnet:\ntelnet 192.168.1.1\nlogin: root\nPassword: Zte521\n\n# หลังเข้า:\ncat /etc/passwd\nbusybox ps',
+        after:['Telnet Shell (read-only)','PPPoE Extraction','Bridge Mode (แนะนำ)','Custom DNS research']
+    },
+    'thai-isp-oem': {
+        cls:'isp', icon:'ISP', title:'TOT / NT / AIS OEM Routers', chip:'ZTE/Huawei/Nokia/Fiberhome · GPON/EPON · ISP-Locked',
+        diff:'hard', diffLbl:'ยาก / Expert', risk:'high', riskLbl:'สูงมาก',
+        overview:`เราเตอร์ OEM ที่ ISP ไทยแจกให้ลูกค้า fiber มักเป็น ZTE, Huawei, Nokia, Sercomm หรือ Fiberhome ที่ถูก rebrand และ lock ด้วย ISP profile ทีม WS มีประสบการณ์ตรงกับ ZTE F6600 (NT), ZTE F670L (AIS), Huawei HG8145V5 (TRUE)`,
+        steps:[
+            'ค้นหา Pantip.com ด้วยชื่อ model + ISP: "NT fiber F6600 root 2566" — Thai community รวบรวมไว้แล้วเยอะมาก',
+            'ลอง default credential ของ ISP technician: telecomadmin/admintelecom, support/support',
+            'ใช้ zte-config-utility หรือ huawei-config-decrypt เพื่อ extract PPPoE จาก config backup',
+            'โทรขอ Bridge Mode: AIS=1175, NT=1888, TRUE=1242 — ระบุ "ขอ PPPoE passthrough / Bridge Mode"',
+            'หลัง Bridge Mode: ซื้อ router ตัวเอง (ASUS/Xiaomi/GL.iNet) ใส่ PPPoE credential ได้เลย'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> NT F6600 super-admin credential derive มาจาก MAC address: algorithm คือ base64(md5(mac[:6] + "ZXHN")) — ทีม WS ค้นพบจากการ dump firmware และ reverse engineer credential generation code`,
+        warn:'⚠️ การแก้ไข device ที่ ISP ยังเป็นเจ้าของอยู่อาจผิดกฎหมาย ทำเฉพาะบน device ที่ซื้อมาเป็นของตัวเองเท่านั้น',
+        code:'# NT F6600 Super Admin (derived):\nUSERNAME: telecomadmin\nPASSWORD: <base64(md5(mac[:6]+"ZXHN"))>\n\n# Telnet:\ntelnet 192.168.1.1 23',
+        after:['Bridge Mode (แนะนำ)','TR-069 disable','PPPoE Extraction','Port Forward unlock','Custom DNS']
+    },
+    'huawei-ax3': {
+        cls:'huawei', icon:'HW', title:'Huawei AX3 / Honor Router 3', chip:'HiSilicon Gigahome 650 · Wi-Fi 6 · Proprietary',
+        diff:'hard', diffLbl:'ยาก / Expert (ไม่มีประโยชน์)', risk:'high', riskLbl:'สูง',
+        overview:`Huawei AX3 และ Honor Router 3 ใช้ HiSilicon Gigahome platform ของตัวเอง ซึ่ง OpenWrt ไม่รองรับและไม่มีแผนจะรองรับ เพราะ Wi-Fi driver เป็น proprietary ทั้งหมด การ "unlock" จึงหมายถึงแค่การเข้าถึง stock firmware shell เท่านั้น`,
+        steps:[
+            'ยอมรับว่าเราเตอร์ตัวนี้จะอยู่กับ stock firmware ตลอดไป — OpenWrt เป็นไปไม่ได้',
+            'UART research: probe PCB หา TX/RX/GND pad ด้วย multimeter (115200 8N1)',
+            'Boot log อ่านได้ผ่าน UART แต่ shell มักถูก lock บน production firmware',
+            'ใช้ Huawei AI Life app หรือ web UI (192.168.3.1) เพื่อ management',
+            'วิธีที่ดีที่สุด: ใช้เป็น AP mode ข้างหลัง router OpenWrt ตัวอื่น'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> Huawei ทำ vertical integration สมบูรณ์แบบ — CPU ของตัวเอง, Wi-Fi ของตัวเอง, OS ของตัวเอง ทำให้เป็น router ที่ modder-hostile ที่สุดในตลาด consumer ถ้าเห็นราคาถูกบน Lazada อย่าซื้อมาหวัง mod`,
+        warn:'⚠️ ไม่มี OpenWrt support และจะไม่มีในอนาคต — สำหรับ modder รุ่นนี้เป็นเงินทิ้งถ้าซื้อมาเพื่อ mod',
+        code:'# UART connection (research only):\nscreen /dev/ttyUSB0 115200\n# Boot log readable, shell likely locked',
+        after:['Stock Firmware Only','ใช้เป็น AP mode','Home Assistant monitoring (ผ่าน stock API)']
+    },
+    'glinet-mt3000': {
+        cls:'glinet', icon:'GL', title:'GL.iNet Beryl AX (MT3000)', chip:'MediaTek MT7981B (Filogic 820) · Wi-Fi 6 · AX3000',
+        diff:'easy', diffLbl:'ง่ายมาก / Beginner-Friendly', risk:'low', riskLbl:'ต่ำมาก',
+        overview:`GL.iNet Beryl AX คือ "OpenWrt by design" — ship มาพร้อม OpenWrt-based firmware และ SSH เปิดให้ใช้ได้ default เหมาะที่สุดสำหรับคนที่เริ่มต้นเรียนรู้ router modding Uboot-WebUI ช่วยให้ recovery ง่ายมาก`,
+        steps:[
+            'เปิดเครื่อง เข้า web UI ที่ 192.168.8.1 ตั้ง admin password',
+            'Enable SSH จาก settings → SSH ใช้งานได้ทันที',
+            'SSH เข้า: ssh root@192.168.8.1',
+            'ใช้ opkg install ติดตั้ง package ต่างๆ — พื้นที่จำกัดบน NAND flash',
+            'Flash vanilla OpenWrt ผ่าน Uboot-WebUI: กด reset ค้าง 5 วินาทีตอน power on'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> GL.iNet Uboot-WebUI recovery mode (กด reset 5 วินาที ตอน power on) ให้ web-based flash interface ที่ใช้งานง่ายมาก หมายความว่า brick ไม่ได้จริงๆ เพราะ recover ได้ด้วย browser + ethernet ทุกครั้ง — travel router ที่กล้า try อะไรก็ได้`,
+        warn:'⚠️ ถ้า flash OpenWrt vanilla จะไม่มี GL interface แล้ว ต้องใช้ LuCI และ VPN ต้องตั้งค่าเอง',
+        code:'ssh root@192.168.8.1\nopkg update\nopkg install adguardhome luci-app-wireguard\n\n# Flash vanilla OpenWrt:\n# กด reset ค้าง 5 วิ ตอน power on → เข้า 192.168.1.1',
+        after:['OpenWrt-based','WireGuard VPN 300Mbps','OpenVPN','AdGuard (pre-packaged)','Tor/Shadowsocks','Entware']
+    },
+    'glinet-mt6000': {
+        cls:'glinet', icon:'GL', title:'GL.iNet Flint 2 (MT6000)', chip:'MediaTek MT7986A (Filogic 830) · Wi-Fi 6 · 8GB eMMC',
+        diff:'easy', diffLbl:'ง่ายมาก / Beginner-Friendly', risk:'low', riskLbl:'ต่ำมาก',
+        overview:`Flint 2 เป็น flagship ของ GL.iNet ที่ใช้ Filogic 830 และมี 8GB eMMC storage ทำให้รัน Docker containers, multiple services ได้พร้อมกัน เป็น "router SBC" ที่ทรงพลังที่สุดในราคา consumer`,
+        steps:[
+            'SSH เข้าได้ทันทีหลัง boot: ssh root@192.168.8.1',
+            'สำรวจ /overlay — 8GB eMMC ให้พื้นที่ package มหาศาลเทียบกับ router ทั่วไป',
+            'ติดตั้ง Docker ผ่าน opkg หรือ GL plugin system',
+            'รัน WireGuard server: HW offload ให้ ~900Mbps throughput จริง',
+            'Flash vanilla OpenWrt ผ่าน Uboot-WebUI ถ้าต้องการ pure experience'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> ทีม WS รัน AdGuard Home, WireGuard, Shadowsocks-rust และ Mosquitto MQTT broker พร้อมกันบน Flint 2 โดยไม่มีปัญหา storage เลย — ใช้ extroot mount /overlay บน eMMC partition แทน NOR flash เพื่อได้ space เต็มๆ`,
+        warn:'⚠️ eMMC recovery ซับซ้อนกว่า NAND แต่ Uboot-WebUI ยังทำงาน ควรทำ backup ก่อน flash',
+        code:'ssh root@192.168.8.1\n# ติดตั้ง Docker:\nopkg install docker dockerd\n\n# รัน AdGuard:\ndocker run -d --name adguard -p 3000:3000 adguard/adguardhome',
+        after:['Full OpenWrt','Docker Containers','WireGuard ~900Mbps','AdGuard Home','NAS via USB 3.0','Shadowsocks/V2Ray','MQTT Broker']
+    },
+    'mikrotik-hap': {
+        cls:'mikrotik', icon:'MT', title:'MikroTik hAP ax3', chip:'Qualcomm IPQ-6010 · Wi-Fi 6 · RouterOS 7',
+        diff:'easy', diffLbl:'ง่าย / Open by Default', risk:'low', riskLbl:'ต่ำมาก',
+        overview:`MikroTik เป็น "open by design" — RouterOS ให้ full control ผ่าน Winbox, SSH, API ตั้งแต่ออกจากกล่อง RouterOS 7 รองรับ Container (Docker) ทำให้รัน AdGuard, WireGuard และ service ต่างๆ โดยไม่ต้องแตะ base OS`,
+        steps:[
+            'เปิดเครื่อง ดาวน์โหลด Winbox จาก mikrotik.com',
+            'Login: admin / password ว่าง (default) — ตั้ง password ทันทีที่เข้าได้',
+            'Update RouterOS: /system package update install',
+            'Enable SSH: /ip service enable ssh',
+            'ติดตั้ง Container package: /system/package/add name=container → reboot → enable container mode'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> RouterOS Container support ช่วยให้รัน Docker image บน router ได้เลย ทำให้ hAP ax3 กลายเป็น all-in-one: Router + VPN Server + AdBlock + Monitoring ในกล่องเดียว นี่คือ production-grade router ที่ยืดหยุ่นที่สุดในตลาด`,
+        warn:'⚠️ RouterOS license ต้องการ activation — hAP ax3 มี perpetual license ฝังมาในตัว ไม่ต้องซื้อเพิ่ม',
+        code:'/system package update install\n/ip service enable ssh\n\n# Container:\n/system/package/add name=container\n/container add remote-image=adguard/adguardhome',
+        after:['RouterOS Full Control','Container/Docker','AdGuard Home','WireGuard','BGP/OSPF Routing','Bandwidth Queue','Hotspot Manager']
+    },
+    'netgear-rax50': {
+        cls:'netgear', icon:'NG', title:'Netgear Nighthawk RAX50', chip:'Qualcomm IPQ8074 Quad-Core · Wi-Fi 6 · AX5400',
+        diff:'medium', diffLbl:'ปานกลาง / Medium', risk:'medium', riskLbl:'กลาง',
+        overview:`Nighthawk RAX50 ใช้ Qualcomm IPQ8074 ที่ดีมาก แต่ Netgear มีระบบ signed firmware Telnet เปิดได้ผ่าน magic packet exploit ที่ community พัฒนาไว้ ให้ shell บน stock firmware ชั่วคราว`,
+        steps:[
+            'ตรวจสอบ firmware version — magic packet ทำงานได้ดีกับ pre-V7 firmware',
+            'ดาวน์โหลด netgear_telnet.py จาก github.com/bkerler',
+            'รัน: python telnetenable.py <ip> <mac> <username> <password>',
+            'Telnet เข้า: ได้ busybox root shell บน stock firmware',
+            'หมายเหตุ: shell นี้ไม่ persistent — หาย หลัง reboot ต้องรัน exploit ใหม่'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> Magic packet trick เป็น classic ของ Netgear Nighthawk — ทีม WS ใช้ประโยชน์เพื่อ extract PPPoE password จาก config, set custom DNS บน stock firmware และรัน monitoring script ชั่วคราว ไม่แนะนำให้ flash OpenWrt เพราะยังไม่มี community port สำหรับ RAX50`,
+        warn:'⚠️ ไม่มี OpenWrt community port สำหรับ RAX50 โดยเฉพาะ อย่า flash random OpenWrt IPQ8074 image เพราะ DTS ไม่ตรง',
+        code:'# Magic Packet Exploit:\npython telnetenable.py 192.168.1.1 <MAC> admin <password>\n\n# หลัง Telnet enable:\ntelnet 192.168.1.1\nbusybox ash',
+        after:['Temporary Stock Root Shell','PPPoE Password Extract','Custom DNS (non-persistent)','Config Research']
+    },
+    'mercusys-mr90x': {
+        cls:'tplink', icon:'MC', title:'Mercusys MR90X v1 (AX6000)', chip:'MediaTek MT7986B (Filogic 830) · Wi-Fi 6 · AX6000',
+        diff:'easy', diffLbl:'ง่าย / Easy', risk:'low', riskLbl:'ต่ำ',
+        overview:`Mercusys MR90X v1 เป็น OpenWrt powerhouse ที่คุ้มค่าที่สุดในราคาระดับกลาง ใช้ Filogic 830 เหมือน ASUS TUF-AX4200 แต่ราคาถูกกว่ามาก และมี dual 2.5GbE port ที่ทำให้ใช้กับ FTTX ได้เต็มประสิทธิภาพ`,
+        steps:[
+            'ดาวน์โหลด OpenWrt initramfs image สำหรับ MR90X v1 จาก firmware-selector.openwrt.org (ตรวจ v1 ด้วย)',
+            'เข้า stock firmware → Software Update → upload initramfs .bin',
+            'Device boot เข้า OpenWrt ชั่วคราว — SSH เข้าทันที: ssh root@192.168.1.1',
+            'รัน sysupgrade ด้วย sysupgrade.bin: sysupgrade -n /tmp/openwrt-sysupgrade.bin',
+            'หลัง reboot: ตั้ง password, ติดตั้ง LuCI, enable HW offload'
+        ],
+        tip:`💡 <strong>เทคนิคพิเศษจาก WS:</strong> MR90X + OpenWrt + HW offload = NAT throughput 1.8Gbps+ จริง คุ้มค่าที่สุดในราคา ~฿2,500-3,000 หลัง flash ให้รัน: <code>opkg install kmod-nft-offload</code> ทันที เพื่อ enable hardware NAT offload`,
+        warn:'⚠️ v1 เท่านั้นที่รองรับ OpenWrt — ตรวจ hardware revision ก่อน flash',
+        code:'# หลัง boot initramfs:\nssh root@192.168.1.1\nsysupgrade -n /tmp/openwrt-sysupgrade.bin\n\n# หลัง reboot:\nopkg update && opkg install kmod-nft-offload luci',
+        after:['Full OpenWrt','HW NAT Offload 1.8Gbps+','WireGuard','AdGuard Home','Dual 2.5GbE','SQM QoS','VLAN 802.1Q']
     }
 };
 
-// ---- Modal Functions ----
+// ---- Brand logo classes ----
+const LOGO_CLS = {
+    xiaomi:'xiaomi', asus:'asus', zte:'zte', isp:'isp',
+    huawei:'huawei', glinet:'glinet', mikrotik:'mikrotik',
+    netgear:'netgear', tplink:'tplink'
+};
+
+// ---- Modal ----
 function openModal(id) {
-    const data = routerData[id];
-    if (!data) return;
+    const d = DB[id];
+    if (!d) return;
 
-    const diffColors = { easy: 'var(--emerald)', medium: 'var(--amber)', hard: 'var(--red)' };
-    const diffColor = diffColors[data.difficulty] || 'var(--text-muted)';
-
-    const stepsHtml = data.steps.map((s, i) =>
+    const steps = d.steps.map((s, i) =>
         `<li><span class="step-num">${i+1}</span><span>${s}</span></li>`
     ).join('');
 
-    const afterHtml = data.afterUnlock.map(a => `<span class="unlock-badge">${a}</span>`).join('');
+    const after = d.after.map(a => `<span class="unlock-badge">${a}</span>`).join('');
 
-    const logoClasses = { xiaomi:'xiaomi',tplink:'tplink',zte:'zte',asus:'asus',huawei:'huawei',glinet:'glinet',netgear:'netgear',isp:'isp',mikrotik:'mikrotik' };
+    const iconHtml = d.icon.startsWith('fa-')
+        ? `<i class="${d.icon}"></i>`
+        : d.icon;
 
     document.getElementById('modalBody').innerHTML = `
         <div class="modal-header">
-            <div class="brand-logo ${logoClasses[data.brand] || ''}" style="width:56px;height:56px;font-size:1.1rem">
-                ${data.icon && data.icon.startsWith('fa-') ? `<i class="${data.icon}"></i>` : data.icon}
-            </div>
+            <div class="modal-icon brand-logo ${d.cls}">${iconHtml}</div>
             <div class="modal-title-group">
-                <h2>${data.title}</h2>
-                <p>${data.chip}</p>
+                <h2>${d.title}</h2>
+                <p>${d.chip}</p>
             </div>
         </div>
         <div class="modal-badges">
-            <span class="diff-badge ${data.difficulty}" style="font-size:0.8rem">${data.diffLabel}</span>
-            <span class="risk ${data.riskClass}" style="font-size:0.82rem"><i class="fa-solid fa-shield-halved"></i> Risk: ${data.risk}</span>
+            <span class="diff-badge ${d.diff}">${d.diffLbl}</span>
+            <span class="risk ${d.risk}"><i class="fa-solid fa-shield-halved"></i> Risk: ${d.riskLbl}</span>
         </div>
         <div class="modal-section">
             <h4>📋 ภาพรวม / Overview</h4>
-            <p>${data.overview}</p>
+            <p>${d.overview}</p>
         </div>
         <div class="modal-section">
             <h4>🔧 ขั้นตอนการปลดล็อค</h4>
-            <ul class="steps-list">${stepsHtml}</ul>
+            <ul class="steps-list">${steps}</ul>
         </div>
-        ${data.codeExample ? `
-        <div class="modal-section">
+        ${d.code ? `<div class="modal-section">
             <h4>💻 ตัวอย่าง Command</h4>
-            <pre class="code-block">${data.codeExample}</pre>
+            <pre class="code-block">${d.code}</pre>
         </div>` : ''}
         <div class="modal-section">
-            <h4>💡 เทคนิคจาก WS Tech</h4>
-            <div class="tip-box">${data.tip}</div>
+            <h4>💡 เทคนิคพิเศษจาก WS Tech</h4>
+            <div class="tip-box">${d.tip}</div>
         </div>
         <div class="modal-section">
             <h4>⚠️ คำเตือน</h4>
-            <div class="warning-box">${data.warning}</div>
+            <div class="warning-box">${d.warn}</div>
         </div>
         <div class="modal-section">
             <h4>🚀 สิ่งที่ทำได้หลังปลดล็อค</h4>
-            <div class="after-unlock">${afterHtml}</div>
+            <div class="after-unlock">${after}</div>
         </div>
     `;
 
@@ -449,16 +348,3 @@ function closeModal() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// ---- Smooth active nav link ----
-const sections = document.querySelectorAll('section[id], .filter-section[id]');
-const navItems = document.querySelectorAll('.nav-link');
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navItems.forEach(a => {
-        a.classList.toggle('active-nav', a.getAttribute('href') === '#' + current);
-    });
-});
