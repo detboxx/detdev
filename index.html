@@ -1,336 +1,593 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DetDev | Cyber Developer & Firmware Modder</title>
-    <meta name="description" content="DetDev - Next-Gen Developer & Embedded Firmware Specialist. Wi-Fi 6 EasyMesh, ZTE Config Decryption, Cloudflare & Web Engineering.">
-    
-    <!-- Google Fonts -->
+    <meta name="description" content="คู่มือปลดล็อคเราเตอร์ฉบับสมบูรณ์ โดยทีม WS Tech — วิธีเปิด SSH, ติดตั้ง OpenWrt, ปรับ Firmware สำหรับ Xiaomi, TP-Link, ZTE, ASUS, Huawei และอีกมาก">
+    <meta name="keywords" content="ปลดล็อคเราเตอร์, router unlock, OpenWrt, SSH router, custom firmware, Xiaomi unlock, ZTE unlock, TP-Link unlock, ASUS unlock">
+    <meta name="author" content="WS Tech — ws.in.th">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="คู่มือปลดล็อคเราเตอร์ | WS Tech">
+    <meta property="og:description" content="ข้อมูลปลดล็อคเราเตอร์ 15+ รุ่น จากประสบการณ์จริง ไม่ใช่แค่ copy wiki">
+    <meta property="og:image" content="https://ws.in.th/og-image.jpg">
+    <meta property="og:url" content="https://www.ws.in.th">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>คู่มือปลดล็อคเราเตอร์ | WS Tech</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Cyber Background Effects -->
-    <div class="cyber-grid"></div>
-    <div class="glow-orb orb-cyan"></div>
-    <div class="glow-orb orb-violet"></div>
-    <div class="glow-orb orb-emerald"></div>
+<!-- Particle Background -->
+<div class="particles" id="particles"></div>
+<div class="bg-gradient-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
 
-    <!-- Navigation Header -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="#" class="brand">
-                <span class="brand-code">&lt;/&gt;</span>
-                <span class="brand-name">Det<span class="neon-cyan">Dev</span></span>
+<!-- Navigation -->
+<header class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-wifi"></i></div>
+            <div class="logo-text">
+                <span class="logo-main">WS<span class="logo-accent">Tech</span></span>
+                <span class="logo-sub">Router Lab</span>
+            </div>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#home" class="nav-link">หน้าแรก</a>
+            <a href="#guides" class="nav-link">คู่มือ</a>
+            <a href="#tools" class="nav-link">เครื่องมือ</a>
+            <a href="#about" class="nav-link">เกี่ยวกับ</a>
+        </nav>
+
+        <div class="nav-right">
+            <span class="nav-badge"><i class="fa-solid fa-circle-check"></i> 15 รุ่น</span>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="เมนู">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="hero-tag">
+            <i class="fa-solid fa-unlock"></i>
+            <span>Router Unlock Lab v3.0</span>
+        </div>
+        <h1 class="hero-title">
+            คู่มือปลดล็อค<br>
+            <span class="gradient-text">เราเตอร์</span><br>
+            ฉบับสมบูรณ์
+        </h1>
+        <p class="hero-desc">
+            ข้อมูลจากประสบการณ์จริงของทีม WS Tech — ไม่ใช่แค่ copy มาจาก Wiki<br>
+            ครอบคลุม <strong>15+ รุ่น / ยี่ห้อ</strong> พร้อมเทคนิคที่หาไม่ได้จากที่อื่น
+        </p>
+        <p class="hero-desc-en">Professional router unlocking guides · SSH · OpenWrt · Custom Firmware · Telnet exploit</p>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-num">15+</span>
+                <span class="stat-lbl">รุ่น/ยี่ห้อ</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-num">3</span>
+                <span class="stat-lbl">ระดับความยาก</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-num">100%</span>
+                <span class="stat-lbl">ข้อมูลตัวเอง</span>
+            </div>
+        </div>
+
+        <div class="hero-actions">
+            <a href="#guides" class="btn btn-primary">
+                <i class="fa-solid fa-book-open"></i> เริ่มอ่านคู่มือ
             </a>
-            
-            <nav class="nav-links" id="navLinks">
-                <a href="#about" class="nav-link active"><i class="fa-solid fa-terminal"></i> About</a>
-                <a href="#skills" class="nav-link"><i class="fa-solid fa-microchip"></i> Skills</a>
-                <a href="#projects" class="nav-link"><i class="fa-solid fa-code-branch"></i> Projects</a>
-                <a href="#contact" class="nav-link"><i class="fa-solid fa-paper-plane"></i> Contact</a>
-            </nav>
+            <a href="#tools" class="btn btn-ghost">
+                <i class="fa-solid fa-screwdriver-wrench"></i> เครื่องมือ
+            </a>
+        </div>
+    </div>
 
-            <div class="nav-actions">
-                <a href="https://github.com/detboxx" target="_blank" class="cyber-btn github">
-                    <i class="fa-brands fa-github"></i> GitHub
-                </a>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+    <div class="hero-visual">
+        <div class="router-diagram">
+            <div class="rd-center">
+                <i class="fa-solid fa-router"></i>
+            </div>
+            <div class="rd-ring rd-ring-1"></div>
+            <div class="rd-ring rd-ring-2"></div>
+            <div class="rd-ring rd-ring-3"></div>
+            <div class="rd-dot" style="--angle:0deg"><span>SSH</span></div>
+            <div class="rd-dot" style="--angle:60deg"><span>OpenWrt</span></div>
+            <div class="rd-dot" style="--angle:120deg"><span>UART</span></div>
+            <div class="rd-dot" style="--angle:180deg"><span>Telnet</span></div>
+            <div class="rd-dot" style="--angle:240deg"><span>Web RCE</span></div>
+            <div class="rd-dot" style="--angle:300deg"><span>TFTP</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Warning Banner -->
+<div class="warning-banner">
+    <div class="warning-container">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+            <strong>⚠️ คำเตือนสำคัญ:</strong>
+            การปลดล็อคเราเตอร์อาจทำให้การรับประกันหมดอายุและมีความเสี่ยงที่อุปกรณ์จะเสียหายถาวร (brick)
+            ทำด้วยความเข้าใจและความเสี่ยงของตัวเองเท่านั้น | <strong>Disclaimer:</strong> For educational purposes only.
+        </div>
+    </div>
+</div>
+
+<!-- Filter Section -->
+<section class="filter-section" id="guides">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">เลือกเราเตอร์ที่ต้องการ</h2>
+            <p class="section-sub">คลิกที่การ์ดเพื่อดูขั้นตอนและเทคนิคแบบละเอียด</p>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+            <button class="filter-btn" data-filter="easy">🟢 ง่าย</button>
+            <button class="filter-btn" data-filter="medium">🟡 ปานกลาง</button>
+            <button class="filter-btn" data-filter="hard">🔴 ยาก</button>
+            <button class="filter-btn" data-filter="thai">🇹🇭 ISP ไทย</button>
+        </div>
+
+        <!-- Router Grid -->
+        <div class="router-grid" id="routerGrid">
+
+            <!-- Xiaomi AX3000T -->
+            <div class="router-card" data-difficulty="easy" data-brand="xiaomi" onclick="openModal('xiaomi-ax3000t')">
+                <div class="card-header">
+                    <div class="brand-logo xiaomi"><i class="fa-solid fa-m"></i></div>
+                    <div class="diff-badge easy">ง่าย / Easy</div>
+                </div>
+                <h3 class="card-title">Xiaomi AX3000T</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> MediaTek MT7981B · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">SSH Exploit</span>
+                    <span class="method-tag">Web RCE</span>
+                    <span class="method-tag">OpenWrt ✓</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำ</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Xiaomi AX9000 -->
+            <div class="router-card" data-difficulty="medium" data-brand="xiaomi" onclick="openModal('xiaomi-ax9000')">
+                <div class="card-header">
+                    <div class="brand-logo xiaomi"><i class="fa-solid fa-m"></i></div>
+                    <div class="diff-badge medium">ปานกลาง</div>
+                </div>
+                <h3 class="card-title">Xiaomi AX9000</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> IPQ8072A Quad-Core · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">SSH Enable</span>
+                    <span class="method-tag">Bootloader</span>
+                    <span class="method-tag">Partial OpenWrt</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk medium"><i class="fa-solid fa-shield-halved"></i> Risk: กลาง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Xiaomi BE7000 -->
+            <div class="router-card" data-difficulty="hard" data-brand="xiaomi" onclick="openModal('xiaomi-be7000')">
+                <div class="card-header">
+                    <div class="brand-logo xiaomi"><i class="fa-solid fa-m"></i></div>
+                    <div class="diff-badge hard">ยาก / Hard</div>
+                </div>
+                <h3 class="card-title">Xiaomi BE7000</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> IPQ5332 · Wi-Fi 7</p>
+                <div class="card-methods">
+                    <span class="method-tag">UART Serial</span>
+                    <span class="method-tag">FTP Exploit</span>
+                    <span class="method-tag">Beta Support</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk: สูง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- TP-Link AX50 -->
+            <div class="router-card" data-difficulty="easy" data-brand="tplink" onclick="openModal('tplink-ax50')">
+                <div class="card-header">
+                    <div class="brand-logo tplink"><i class="fa-solid fa-t"></i></div>
+                    <div class="diff-badge easy">ง่าย / Easy</div>
+                </div>
+                <h3 class="card-title">TP-Link Archer AX50</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> Broadcom BCM6750 · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">Web Flash</span>
+                    <span class="method-tag">TFTP Recovery</span>
+                    <span class="method-tag">OpenWrt ✓</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำ</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- TP-Link AX73 -->
+            <div class="router-card" data-difficulty="easy" data-brand="tplink" onclick="openModal('tplink-ax73')">
+                <div class="card-header">
+                    <div class="brand-logo tplink"><i class="fa-solid fa-t"></i></div>
+                    <div class="diff-badge easy">ง่าย / Easy</div>
+                </div>
+                <h3 class="card-title">TP-Link Archer AX73</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> MediaTek MT7621A · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">Web UI Flash</span>
+                    <span class="method-tag">OpenWrt ✓</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำ</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- ZTE F6600 -->
+            <div class="router-card" data-difficulty="hard" data-brand="zte" data-thai="true" onclick="openModal('zte-f6600')">
+                <div class="card-header">
+                    <div class="brand-logo zte">ZTE</div>
+                    <div class="diff-badge hard">ยาก / Hard</div>
+                </div>
+                <h3 class="card-title">ZTE F6600 <span class="isp-tag">🇹🇭 ISP</span></h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> Qualcomm IPQ4019 · GPON ONU</p>
+                <div class="card-methods">
+                    <span class="method-tag">Telnet Exploit</span>
+                    <span class="method-tag">Config Decrypt</span>
+                    <span class="method-tag">AES-128</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk: สูง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- ZTE F6107 -->
+            <div class="router-card" data-difficulty="hard" data-brand="zte" data-thai="true" onclick="openModal('zte-f6107')">
+                <div class="card-header">
+                    <div class="brand-logo zte">ZTE</div>
+                    <div class="diff-badge hard">ยาก / Hard</div>
+                </div>
+                <h3 class="card-title">ZTE F6107 <span class="isp-tag">🇹🇭 ISP</span></h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> MediaTek MT7628 · EPON/GPON</p>
+                <div class="card-methods">
+                    <span class="method-tag">Serial UART</span>
+                    <span class="method-tag">Telnet</span>
+                    <span class="method-tag">Config Backup</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk: สูง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- ASUS RT-AX88U -->
+            <div class="router-card" data-difficulty="easy" data-brand="asus" onclick="openModal('asus-rtax88u')">
+                <div class="card-header">
+                    <div class="brand-logo asus">ASUS</div>
+                    <div class="diff-badge easy">ง่าย / Easy</div>
+                </div>
+                <h3 class="card-title">ASUS RT-AX88U</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> Broadcom BCM4908 · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">Asuswrt-Merlin</span>
+                    <span class="method-tag">SSH built-in</span>
+                    <span class="method-tag">Entware</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำมาก</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- ASUS TUF-AX4200 -->
+            <div class="router-card" data-difficulty="medium" data-brand="asus" onclick="openModal('asus-tufax4200')">
+                <div class="card-header">
+                    <div class="brand-logo asus">ASUS</div>
+                    <div class="diff-badge medium">ปานกลาง</div>
+                </div>
+                <h3 class="card-title">ASUS TUF-AX4200</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> MediaTek MT7986A · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">OpenWrt ✓</span>
+                    <span class="method-tag">SSH</span>
+                    <span class="method-tag">Merlin</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำ</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Huawei AX3 -->
+            <div class="router-card" data-difficulty="hard" data-brand="huawei" onclick="openModal('huawei-ax3')">
+                <div class="card-header">
+                    <div class="brand-logo huawei"><i class="fa-solid fa-h"></i></div>
+                    <div class="diff-badge hard">ยาก / Hard</div>
+                </div>
+                <h3 class="card-title">Huawei AX3 / Honor Router 3</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> HiSilicon Kirin 659 · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">Telnet Hidden</span>
+                    <span class="method-tag">Password Crack</span>
+                    <span class="method-tag">No OpenWrt</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk: สูง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- GL.iNet MT3000 -->
+            <div class="router-card" data-difficulty="easy" data-brand="glinet" onclick="openModal('glinet-mt3000')">
+                <div class="card-header">
+                    <div class="brand-logo glinet">GL</div>
+                    <div class="diff-badge easy">ง่ายมาก</div>
+                </div>
+                <h3 class="card-title">GL.iNet MT3000 (Beryl AX)</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> MediaTek MT7981B · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">SSH Default</span>
+                    <span class="method-tag">OpenWrt-based</span>
+                    <span class="method-tag">LuCI ✓</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำมาก</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Netgear Nighthawk RAX50 -->
+            <div class="router-card" data-difficulty="medium" data-brand="netgear" onclick="openModal('netgear-rax50')">
+                <div class="card-header">
+                    <div class="brand-logo netgear"><i class="fa-solid fa-n"></i></div>
+                    <div class="diff-badge medium">ปานกลาง</div>
+                </div>
+                <h3 class="card-title">Netgear Nighthawk RAX50</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> Broadcom BCM6750 · Wi-Fi 6</p>
+                <div class="card-methods">
+                    <span class="method-tag">Telnet Enable</span>
+                    <span class="method-tag">DD-WRT</span>
+                    <span class="method-tag">OpenWrt Partial</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk medium"><i class="fa-solid fa-shield-halved"></i> Risk: กลาง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- TOT/AIS/NT OEM -->
+            <div class="router-card" data-difficulty="hard" data-brand="isp" data-thai="true" onclick="openModal('thai-isp-oem')">
+                <div class="card-header">
+                    <div class="brand-logo isp">ISP</div>
+                    <div class="diff-badge hard">ยาก / Expert</div>
+                </div>
+                <h3 class="card-title">TOT / NT / AIS OEM <span class="isp-tag">🇹🇭 ISP</span></h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> ZTE/Huawei/Nokia OEM · GPON</p>
+                <div class="card-methods">
+                    <span class="method-tag">Telnet Hidden</span>
+                    <span class="method-tag">Config Decrypt</span>
+                    <span class="method-tag">UART Access</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk high"><i class="fa-solid fa-shield-halved"></i> Risk: สูงมาก</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- MikroTik hAP ax3 -->
+            <div class="router-card" data-difficulty="easy" data-brand="mikrotik" onclick="openModal('mikrotik-hap')">
+                <div class="card-header">
+                    <div class="brand-logo mikrotik">MT</div>
+                    <div class="diff-badge easy">ง่าย / Easy</div>
+                </div>
+                <h3 class="card-title">MikroTik hAP ax3</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> IPQ-6010 · RouterOS 7</p>
+                <div class="card-methods">
+                    <span class="method-tag">RouterOS Open</span>
+                    <span class="method-tag">Winbox</span>
+                    <span class="method-tag">Full Control</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk low"><i class="fa-solid fa-shield-halved"></i> Risk: ต่ำมาก</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Redmi AX6000 -->
+            <div class="router-card" data-difficulty="medium" data-brand="xiaomi" onclick="openModal('redmi-ax6000')">
+                <div class="card-header">
+                    <div class="brand-logo xiaomi"><i class="fa-solid fa-m"></i></div>
+                    <div class="diff-badge medium">ปานกลาง</div>
+                </div>
+                <h3 class="card-title">Redmi AX6000</h3>
+                <p class="card-chip"><i class="fa-solid fa-microchip"></i> MediaTek MT7986A (Filogic 830)</p>
+                <div class="card-methods">
+                    <span class="method-tag">SSH API Exploit</span>
+                    <span class="method-tag">ImmortalWrt</span>
+                    <span class="method-tag">Breed Boot</span>
+                </div>
+                <div class="card-footer">
+                    <span class="risk medium"><i class="fa-solid fa-shield-halved"></i> Risk: กลาง</span>
+                    <span class="read-more">อ่านเพิ่ม <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+        </div><!-- /router-grid -->
+    </div>
+</section>
+
+<!-- Tools Section -->
+<section class="tools-section" id="tools">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">เครื่องมือที่ใช้บ่อย</h2>
+            <p class="section-sub">Software และ Resource ที่ทีม WS Tech ใช้จริงในการปลดล็อค</p>
+        </div>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon"><i class="fa-solid fa-terminal"></i></div>
+                <h4>PuTTY / OpenSSH</h4>
+                <p>SSH Client สำหรับเข้าถึง shell ของเราเตอร์</p>
+                <a href="https://www.putty.org" target="_blank" rel="noopener" class="tool-link">ดาวน์โหลด →</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon"><i class="fa-solid fa-file-code"></i></div>
+                <h4>WinSCP / SCP</h4>
+                <p>ถ่ายโอนไฟล์ firmware ไปยังเราเตอร์ผ่าน SSH</p>
+                <a href="https://winscp.net" target="_blank" rel="noopener" class="tool-link">ดาวน์โหลด →</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon"><i class="fa-solid fa-network-wired"></i></div>
+                <h4>Wireshark</h4>
+                <p>ดักจับ packet เพื่อหา API endpoint และ credential ซ่อน</p>
+                <a href="https://www.wireshark.org" target="_blank" rel="noopener" class="tool-link">ดาวน์โหลด →</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon"><i class="fa-brands fa-python"></i></div>
+                <h4>Python 3 + Paramiko</h4>
+                <p>Script อัตโนมัติสำหรับ SSH brute / automation</p>
+                <a href="https://www.python.org" target="_blank" rel="noopener" class="tool-link">ดาวน์โหลด →</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon"><i class="fa-solid fa-plug"></i></div>
+                <h4>CH341A Programmer</h4>
+                <p>อ่าน/เขียน Flash chip โดยตรงกรณี brick ขั้นรุนแรง</p>
+                <a href="https://www.aliexpress.com" target="_blank" rel="noopener" class="tool-link">หาซื้อ →</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon"><i class="fa-solid fa-globe"></i></div>
+                <h4>OpenWrt Firmware Selector</h4>
+                <p>เลือก firmware ที่ถูกต้องสำหรับรุ่นเราเตอร์ของคุณ</p>
+                <a href="https://firmware-selector.openwrt.org" target="_blank" rel="noopener" class="tool-link">เปิดเว็บ →</a>
             </div>
         </div>
-    </header>
+    </div>
+</section>
 
-    <!-- Main Container -->
-    <main class="main-container">
-
-        <!-- Hero Section -->
-        <section class="hero-section" id="hero">
-            <div class="live-status-badge">
-                <span class="pulse-emerald"></span>
-                <span>SYSTEM ONLINE // DETDEV CYBER SHELL v2.0</span>
-            </div>
-
-            <h1 class="hero-title">
-                Det<span class="gradient-text">Dev</span><span class="cursor">_</span>
-            </h1>
-            
-            <h2 class="hero-subtitle">
-                FIRMWARE MODDER & FULL-STACK DEVELOPER
-            </h2>
-
-            <p class="hero-description">
-                Specializing in low-level router optimization, custom firmware patchers, AES-128 payload decryption, Cloudflare edge security, and high-speed web solutions.
-            </p>
-
-            <div class="hero-actions">
-                <a href="#projects" class="cyber-btn primary">
-                    <i class="fa-solid fa-fire"></i> View Mods & Projects
-                </a>
-                <a href="mailto:detboxx@gmail.com" class="cyber-btn secondary">
-                    <i class="fa-solid fa-envelope"></i> detboxx@gmail.com
-                </a>
-            </div>
-
-            <!-- Kinetic Stats Matrix Grid -->
-            <div class="matrix-stats-grid">
-                <div class="matrix-card">
-                    <div class="card-glow cyan"></div>
-                    <div class="stat-icon"><i class="fa-solid fa-wifi"></i></div>
-                    <div class="stat-info">
-                        <span class="val cyan">2.4 Gbps</span>
-                        <span class="lbl">5GHz Wireless Backhaul</span>
-                    </div>
-                </div>
-
-                <div class="matrix-card">
-                    <div class="card-glow violet"></div>
-                    <div class="stat-icon"><i class="fa-solid fa-microchip"></i></div>
-                    <div class="stat-info">
-                        <span class="val violet">ZTE ZXHN</span>
-                        <span class="lbl">F6600, F6107A, F670 Fixes</span>
-                    </div>
-                </div>
-
-                <div class="matrix-card">
-                    <div class="card-glow emerald"></div>
-                    <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="stat-info">
-                        <span class="val emerald">Cloudflare</span>
-                        <span class="lbl">Edge CDN & SSL Security</span>
-                    </div>
+<!-- About Section -->
+<section class="about-section" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text">
+                <div class="about-tag">เกี่ยวกับเรา · About Us</div>
+                <h2>WS Tech — Router Lab</h2>
+                <p>
+                    เราคือกลุ่มนักพัฒนาและ firmware modder ที่มีความหลงใหลในการ reverse engineer อุปกรณ์ network
+                    ข้อมูลทุกอย่างในเว็บนี้มาจากการทดสอบจริงด้วยอุปกรณ์จริง ไม่ใช่การ copy มาจาก forum หรือ wiki
+                </p>
+                <p>
+                    เชี่ยวชาญด้าน: <strong>Embedded Linux, Custom Firmware, Network Security, GPON/ONU Hacking,
+                    AES Config Decryption, EasyMesh Protocol Analysis</strong>
+                </p>
+                <div class="about-badges">
+                    <span class="about-badge"><i class="fa-solid fa-code"></i> Embedded Dev</span>
+                    <span class="about-badge"><i class="fa-solid fa-lock-open"></i> Firmware Modder</span>
+                    <span class="about-badge"><i class="fa-solid fa-shield"></i> Network Security</span>
+                    <span class="about-badge"><i class="fa-brands fa-linux"></i> OpenWrt Expert</span>
                 </div>
             </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="section-block" id="about">
-            <div class="glass-card">
-                <div class="card-top-bar">
-                    <div class="window-controls">
-                        <span class="w-dot red"></span>
-                        <span class="w-dot yellow"></span>
-                        <span class="w-dot green"></span>
-                    </div>
-                    <span class="w-label">detdev@modder-shell:~ $ cat profile.json</span>
+            <div class="about-stats-box">
+                <div class="astat">
+                    <span class="astat-n">15+</span>
+                    <span class="astat-l">รุ่นที่ทดสอบจริง</span>
                 </div>
-
-                <div class="card-content">
-                    <h2 class="block-title"><i class="fa-solid fa-user-ninja text-cyan"></i> About DetDev</h2>
-                    <p class="block-text">
-                        DetDev bridges the gap between low-level hardware networking and high-performance modern web technologies. From reverse-engineering proprietary router config binaries to configuring global CDN proxy pipelines and building futuristic web UIs, DetDev crafts robust, zero-latency solutions.
-                    </p>
-
-                    <div class="terminal-box">
-                        <div class="term-line"><span class="prompt">$</span> <span class="cmd">cat system_specs.json</span></div>
-                        <pre class="code-block">{
-  <span class="k">"brand"</span>: <span class="s">"DetDev"</span>,
-  <span class="k">"role"</span>: <span class="s">"Embedded Firmware Modder"</span>,
-  <span class="k">"focus"</span>: [
-    <span class="s">"Wi-Fi 6 EasyMesh 1905.1"</span>,
-    <span class="s">"ZTE Config Decryption"</span>,
-    <span class="s">"Cloudflare Edge Security"</span>
-  ],
-  <span class="k">"email"</span>: <span class="s">"detboxx@gmail.com"</span>,
-  <span class="k">"status"</span>: <span class="s">"100% Star Topology"</span>
-}</pre>
-                    </div>
+                <div class="astat">
+                    <span class="astat-n">3+</span>
+                    <span class="astat-l">ปีประสบการณ์</span>
+                </div>
+                <div class="astat">
+                    <span class="astat-n">100%</span>
+                    <span class="astat-l">ข้อมูลต้นฉบับ</span>
+                </div>
+                <div class="astat">
+                    <span class="astat-n">ISP 🇹🇭</span>
+                    <span class="astat-l">เชี่ยวชาญพิเศษ</span>
                 </div>
             </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="section-block" id="skills">
-            <div class="glass-card">
-                <div class="card-top-bar">
-                    <span class="w-label"><i class="fa-solid fa-sliders"></i> SKILLS_MATRIX.CONF</span>
-                </div>
-
-                <div class="card-content">
-                    <h2 class="block-title"><i class="fa-solid fa-layer-group text-violet"></i> Technical Arsenal</h2>
-                    <p class="block-text">Core competencies, protocols, and tools DetDev works with daily:</p>
-
-                    <div class="skills-columns-grid">
-                        
-                        <div class="skill-box">
-                            <h3><i class="fa-solid fa-network-wired text-cyan"></i> Networking & Firmware</h3>
-                            <div class="tech-pills">
-                                <span class="pill"><i class="fa-solid fa-wifi"></i> Wi-Fi 6 (AX3000)</span>
-                                <span class="pill"><i class="fa-solid fa-diagram-project"></i> EasyMesh 1905.1</span>
-                                <span class="pill"><i class="fa-solid fa-server"></i> ZTE ZXHN Series</span>
-                                <span class="pill"><i class="fa-solid fa-key"></i> AES-128 Payload</span>
-                                <span class="pill"><i class="fa-solid fa-terminal"></i> Telnet & Superuser</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-box">
-                            <h3><i class="fa-solid fa-cloud text-emerald"></i> Cloud & Security</h3>
-                            <div class="tech-pills">
-                                <span class="pill"><i class="fa-solid fa-cloud"></i> Cloudflare CDN</span>
-                                <span class="pill"><i class="fa-solid fa-shield"></i> DDoS Protection</span>
-                                <span class="pill"><i class="fa-solid fa-globe"></i> Custom Domain & SSL</span>
-                                <span class="pill"><i class="fa-brands fa-github"></i> GitHub Pages</span>
-                                <span class="pill"><i class="fa-solid fa-database"></i> Serverless DB</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-box">
-                            <h3><i class="fa-solid fa-code text-rose"></i> Software Development</h3>
-                            <div class="tech-pills">
-                                <span class="pill"><i class="fa-brands fa-python"></i> Python 3</span>
-                                <span class="pill"><i class="fa-brands fa-html5"></i> HTML5 & CSS3</span>
-                                <span class="pill"><i class="fa-brands fa-js"></i> ES6+ JavaScript</span>
-                                <span class="pill"><i class="fa-solid fa-cubes"></i> Modern Glassmorphism</span>
-                                <span class="pill"><i class="fa-brands fa-git-alt"></i> Git Version Control</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Mesh Monitor & Device Inspector Section -->
-        <section class="section-block" id="mesh-monitor">
-            <div class="glass-card">
-                <div class="card-top-bar">
-                    <span class="w-label"><i class="fa-solid fa-satellite-dish text-cyan"></i> EASYMESH_DEVICE_INSPECTOR.LOG</span>
-                </div>
-                <div class="card-content">
-                    <h2 class="block-title"><i class="fa-solid fa-network-wired text-cyan"></i> Mesh Network & Connected Device Inspector</h2>
-                    <p class="block-text">3 Ways to check real-time connected devices and Wi-Fi 6 Mesh status across F6600, F6107A, and F670 nodes:</p>
-
-                    <div class="skills-columns-grid">
-                        <div class="skill-box">
-                            <h3><i class="fa-solid fa-sitemap text-cyan"></i> 1. Router Web GUI (Realtime Topology)</h3>
-                            <p class="block-text" style="margin-bottom: 10px; font-size: 0.82rem;">Access <code style="color: var(--neon-cyan);">http://192.168.1.1</code> ➔ Navigate to <strong>EasyMesh ➔ Topology</strong>. Click any Agent node to view connected MAC addresses, IP assignments, Link Speed (e.g. 1201 Mbps), and RSSI signal level.</p>
-                        </div>
-
-                        <div class="skill-box">
-                            <h3><i class="fa-solid fa-list-check text-emerald"></i> 2. Associated WLAN Client Table</h3>
-                            <p class="block-text" style="margin-bottom: 10px; font-size: 0.82rem;">Navigate to <strong>Local Network ➔ Status ➔ WLAN Client Status</strong>. Displays active 2.4GHz & 5GHz SSIDs (<code style="color: var(--neon-emerald);">NJ</code> / <code style="color: var(--neon-emerald);">NJ_5G</code>), client RSSI, and bandwidth utilization.</p>
-                        </div>
-
-                        <div class="skill-box">
-                            <h3><i class="fa-solid fa-terminal text-violet"></i> 3. Direct Firmware Log Extraction</h3>
-                            <p class="block-text" style="margin-bottom: 10px; font-size: 0.82rem;">Inspect raw <code style="color: var(--neon-violet);">61_log_file.log</code> / <code style="color: var(--neon-violet);">62_log_file.log</code> events for <code style="color: var(--neon-violet);">wlan5 sta on</code> notifications, MAC association handshakes, and 5GHz Star Topology backhaul health.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section class="section-block" id="projects">
-            <h2 class="block-title"><i class="fa-solid fa-bolt text-rose"></i> Featured Projects & Mods</h2>
-            <p class="block-text">Selected open-source mods, scripts, and production tools by DetDev:</p>
-
-            <div class="projects-matrix-grid">
-                
-                <!-- Project 1 -->
-                <div class="project-cyber-card">
-                    <div class="project-badge cyan">FIRMWARE MOD</div>
-                    <h3>ZTE ZXHN EasyMesh Patcher</h3>
-                    <p>Automated python configuration patcher for ZTE ZXHN Series (F6600, F6107A, F670). Fixes ACD queue floods, steering loops, and forces 100% 5GHz Star Topology.</p>
-                    <div class="project-tags-row">
-                        <span>Python 3</span>
-                        <span>EasyMesh</span>
-                        <span>Wi-Fi 6</span>
-                        <span>AES-128</span>
-                    </div>
-                    <a href="https://github.com/detboxx/zte-f6107a-mesh-fix" target="_blank" class="project-link">
-                        <span>View Source Code</span> <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="project-cyber-card">
-                    <div class="project-badge violet">REVERSE ENG</div>
-                    <h3>ZTE Config Decryption Suite</h3>
-                    <p>Documentation & script pipeline for parsing 128-byte Magic Headers, unpacking Zlib payloads, and enabling LAN Telnet & Superuser access across major Thai ISPs.</p>
-                    <div class="project-tags-row">
-                        <span>Zlib</span>
-                        <span>Telnet</span>
-                        <span>Superuser</span>
-                        <span>Magic Header</span>
-                    </div>
-                    <a href="https://github.com/detboxx/zte-f6107a-mesh-fix" target="_blank" class="project-link">
-                        <span>View Source Code</span> <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-cyber-card">
-                    <div class="project-badge emerald">CLOUD DEV</div>
-                    <h3>Cloudflare Edge CDN Pipeline</h3>
-                    <p>Custom domain pointing (ws.in.th) configured with Cloudflare Proxied CNAME records, Bangkok Edge Cache acceleration, and full HTTPS SSL security for GitHub Pages.</p>
-                    <div class="project-tags-row">
-                        <span>Cloudflare</span>
-                        <span>DNS</span>
-                        <span>HTTPS</span>
-                        <span>GitHub Pages</span>
-                    </div>
-                    <a href="https://www.ws.in.th" target="_blank" class="project-link">
-                        <span>Visit Live Site</span> <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="section-block" id="contact">
-            <div class="glass-card contact-block">
-                <div class="card-content text-center">
-                    <h2 class="block-title center"><i class="fa-solid fa-paper-plane text-cyan"></i> Connect with DetDev</h2>
-                    <p class="block-text">Have a technical question or want to collaborate? Reach out directly below:</p>
-
-                    <div class="contact-cards-grid">
-                        
-                        <div class="contact-card-box" onclick="copyContact('detboxx@gmail.com')">
-                            <div class="icon-box emerald"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="info">
-                                <span class="lbl">DIRECT EMAIL</span>
-                                <span class="val">detboxx@gmail.com</span>
-                            </div>
-                            <i class="fa-regular fa-copy copy-btn-icon"></i>
-                        </div>
-
-                        <div class="contact-card-box" onclick="window.open('https://github.com/detboxx', '_blank')">
-                            <div class="icon-box violet"><i class="fa-brands fa-github"></i></div>
-                            <div class="info">
-                                <span class="lbl">GITHUB PROFILE</span>
-                                <span class="val">github.com/detboxx</span>
-                            </div>
-                            <i class="fa-solid fa-arrow-up-right-from-square copy-btn-icon"></i>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <p>© 2026 DetDev. All rights reserved.</p>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Action executed!</span></div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fa-solid fa-wifi"></i></div>
+                    <div class="logo-text">
+                        <span class="logo-main">WS<span class="logo-accent">Tech</span></span>
+                        <span class="logo-sub">Router Lab</span>
+                    </div>
+                </div>
+                <p class="footer-desc">คู่มือปลดล็อคเราเตอร์จากประสบการณ์จริง<br>Router Unlocking Knowledge Base</p>
+                <p class="footer-credit">
+                    Crafted with ❤️ by <strong>WS Tech Team</strong><br>
+                    <a href="mailto:contact@ws.in.th">contact@ws.in.th</a>
+                </p>
+            </div>
+            <div class="footer-links">
+                <h5>คู่มือ</h5>
+                <a href="#guides">Xiaomi Routers</a>
+                <a href="#guides">TP-Link Routers</a>
+                <a href="#guides">ZTE / ISP Thailand</a>
+                <a href="#guides">ASUS Routers</a>
+                <a href="#guides">GL.iNet Routers</a>
+            </div>
+            <div class="footer-links">
+                <h5>ข้อมูล</h5>
+                <a href="#tools">เครื่องมือ</a>
+                <a href="#about">เกี่ยวกับเรา</a>
+                <a href="https://openwrt.org" target="_blank" rel="noopener">OpenWrt.org ↗</a>
+                <a href="https://firmware-selector.openwrt.org" target="_blank" rel="noopener">Firmware Selector ↗</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 WS Tech — ws.in.th · ข้อมูลเพื่อการศึกษาเท่านั้น · For Educational Purposes Only</p>
+            <p class="footer-disclaimer">การปลดล็อคอุปกรณ์อาจผิดกฎหมายหรือละเมิดเงื่อนไขการใช้งานในบางประเทศ กรุณาตรวจสอบกฎหมายท้องถิ่นก่อน</p>
+        </div>
+    </div>
+</footer>
 
-    <script src="app.js"></script>
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal" id="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
