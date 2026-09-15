@@ -258,21 +258,25 @@ strong{color:#e2e8f0}
 
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 
-/* Brand chip */
-.brand-chip{
-  width:44px;height:44px;border-radius:11px;
+/* Brand logo container */
+.blogo{
   display:flex;align-items:center;justify-content:center;
-  font-size:.68rem;font-weight:900;letter-spacing:.5px;
+  height:36px;padding:0 6px;border-radius:9px;
+  flex-shrink:0;overflow:hidden;
 }
-.c-mi  {background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.22)}
-.c-asus{background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.22)}
-.c-zte {background:rgba(108,99,255,.12);color:#a78bfa;border:1px solid rgba(108,99,255,.22)}
-.c-isp {background:rgba(139,92,246,.12);color:#c084fc;border:1px solid rgba(139,92,246,.22)}
-.c-hw  {background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.22)}
-.c-gl  {background:rgba(6,182,212,.12);color:#22d3ee;border:1px solid rgba(6,182,212,.22)}
-.c-mt  {background:rgba(249,115,22,.12);color:#fb923c;border:1px solid rgba(249,115,22,.22)}
-.c-ng  {background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.22)}
-.c-tp  {background:rgba(59,130,246,.12);color:#60a5fa;border:1px solid rgba(59,130,246,.22)}
+.blogo svg{display:block}
+
+.blogo-mi    {background:rgba(255,105,0,.1);border:1px solid rgba(255,105,0,.2)}
+.blogo-redmi {background:rgba(220,50,50,.1);border:1px solid rgba(220,50,50,.2)}
+.blogo-asus  {background:rgba(0,160,227,.1);border:1px solid rgba(0,160,227,.2)}
+.blogo-zte   {background:rgba(0,91,172,.1);border:1px solid rgba(0,91,172,.2)}
+.blogo-isp   {background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2)}
+.blogo-hw    {background:rgba(207,10,44,.1);border:1px solid rgba(207,10,44,.2)}
+.blogo-gl    {background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2)}
+.blogo-mt    {background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.2)}
+.blogo-ng    {background:rgba(227,24,55,.1);border:1px solid rgba(227,24,55,.2)}
+.blogo-mc    {background:rgba(30,144,255,.1);border:1px solid rgba(30,144,255,.2)}
+
 
 /* Diff badge */
 .badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;white-space:nowrap}
